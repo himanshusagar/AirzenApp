@@ -63,10 +63,12 @@ public class DbContract {
                         + PM10 + INT_TYPE + COMMA_SEP
                         + CARBON_MONOXIDE + INT_TYPE
                         + " );";
+
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 
     public static abstract class Past24Hours implements BaseColumns{
+
         public static final String TABLE_NAME="past24Hours";
         public static final String HOUR_NUMBER="hourNumber";
         public static final String AQI="aqi";

@@ -60,6 +60,17 @@ public class HomeFragment extends Fragment {
                     }
                 }
         );
+        TextView gasSpecific = (TextView)l.findViewById(R.id.majorPol);
+        gasSpecific.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getContext(), GasSpecific.class);
+                        startActivity(intent);
+                    }
+                }
+        );
+
         TextView majorpol = (TextView)l.findViewById(R.id.majorPol);
         majorpol.setText("Major Pollutant - PM 2.5");
         //Toast.makeText(getContext(), "Home", Toast.LENGTH_SHORT).show();

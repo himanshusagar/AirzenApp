@@ -11,7 +11,12 @@ public class SendJson {
     }
 */
 
-    /*public static HttpResponse makeQuery(int yearOfBirth, Set defects, String deviceID){
+ /*   public static void makeQuery(){
+
+
+    }
+
+    public static HttpResponse makeQuery(int yearOfBirth, Set defects, String deviceID){
         JSONObject data = MakeJson.wrapPreferences(yearOfBirth , defects, "A123");
         Log.d("JsonObject", String.valueOf(data));
         //new SendJson(url, data, new Response.Listener<JSONObject>(){});

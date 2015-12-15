@@ -1,0 +1,153 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="iiitd.airzentest2.GasSpecific"
+    android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#88B1B7"
+        android:id="@+id/toolbar3"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:title="Airzen" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1"
+        android:layout_alignParentEnd="true">
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="3dp" />
+        <Spinner
+            android:id="@+id/trendSelector"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:spinnerMode="dropdown" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/message"
+            android:fontFamily="roboto"
+            android:singleLine="false"
+            android:textAlignment="center"
+            android:textColor="#ffff1219"
+            android:textSize="18dp"
+            android:textStyle="normal"
+            android:clickable="false"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
+
+        <ScrollView android:id="@+id/ScrollView01"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="2dp"
+            android:fillViewport="false"
+            android:paddingTop="10dp">
+
+            <LinearLayout  xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:weightSum="1"
+                style="@style/Base.Theme.AppCompat"
+                android:padding="5dp"
+                android:layout_weight="0.75">
+
+                <TextView
+                    android:id="@+id/healthRisks"
+                    android:text="Health Risks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:gravity="bottom"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+                    android:textSize="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="#f44336"
+                    android:padding="3dp" />
+
+                <com.ms.square.android.expandabletextview.ExpandableTextView
+                    android:id="@+id/exTextViewHealthRisks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    expandableTextView:maxCollapsedLines="3">
+
+                    <TextView
+                        android:id="@id/expandable_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:fontFamily="sans-serif-light"
+                        android:textSize="16sp"
+                        android:textColor="#666666" />
+
+                    <ImageButton
+                        android:id="@id/expand_collapse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:layout_gravity="right|bottom"
+                        android:background="@android:color/transparent"/>
+                </com.ms.square.android.expandabletextview.ExpandableTextView>
+                <TextView
+                    android:id="@+id/precautions"
+                    android:text="Precautions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:gravity="bottom"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+                    android:textSize="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:padding="3dp"
+                    android:background="#afb42b" />
+
+                <com.ms.square.android.expandabletextview.ExpandableTextView
+                    android:id="@+id/exTextViewPrecautions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    expandableTextView:maxCollapsedLines="3">
+
+                    <TextView
+                        android:id="@id/expandable_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:fontFamily="sans-serif-light"
+                        android:textSize="16sp"
+                        android:textColor="#666666" />
+
+                    <ImageButton
+                        android:id="@id/expand_collapse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:layout_gravity="right|bottom"
+                        android:background="@android:color/transparent"/>
+                </com.ms.square.android.expandabletextview.ExpandableTextView>
+            </LinearLayout>
+
+
+        </ScrollView>
+    </LinearLayout>
+
+
+</LinearLayout>

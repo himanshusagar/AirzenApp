@@ -1,5 +1,7 @@
 package iiitd.airzentest2;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -7,8 +9,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import iiitd.airzentest2.db.DbSingleton;
 
 public class MainActivity extends AppCompatActivity {
     DrawerLayout mDrawerLayout;
@@ -19,6 +28,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        final SharedPreferences prefs = this.getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
+        try {
+            testJson();
+        } catch (JSONException e) {
+                e.printStackTrace();
+        }
+        final DbSingleton db = DbSingleton.getInstance();
         initialiseViews();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView) findViewById(R.id.shitstuff);
@@ -66,6 +82,85 @@ public class MainActivity extends AppCompatActivity {
     private void initialiseViews(){
 
 
+    }
+    private void testJson() throws JSONException {
+        String jsonStr = "{\n" +
+                "  \"inferences\":[\"Test Inference\",\"ddddd\"],\n" +
+                "  \"gasSpecific\":\n" +
+                "  [\n" +
+                "    {\n" +
+                "      \"gasType\":\"aqi\",\n" +
+                "      \"aqi\":321,\n" +
+                "      \"pastDay\":[213,444,123,11,87,213,444,123,11,87,65,290],\n" +
+                "      \"pastWeek\":[213,444,123,11,87,213,444,123,11,87,65,290],\n" +
+                "      \"pastMonth\":[213,444,123,11,87,213,444,123,11,87,65,290,213,444,123,11,87,213,444,123,11,87,65,290,213,444,123,11,87,213,444,123,11,87,65,290],\n" +
+                "      \"monthly\":[213,444,123,11,87,213,444,123,11,87,65,290],\n" +
+                "      \"healthRisks\":[],\n" +
+                "      \"suggestions\":[]\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"gasType\":\"nitrogenDioxide\",\n" +
+                "      \"aqi\":213,\n" +
+                "      \"pastDay\":[213,444,123,11,87,213,444,123,11,87,65,290],\n" +
+                "      \"pastWeek\":[213,444,123,11,87,213,444,123,11,87,65,290],\n" +
+                "      \"pastMonth\":[213,444,123,11,87,213,444,123,11,87,65,290,213,444,123,11,87,213,444,123,11,87,65,290,213,444,123,11,87,213,444,123,11,87,65,290],\n" +
+                "      \"monthly\":[213,444,123,11,87,213,444,123,11,87,65,290],\n" +
+                "      \"healthRisks\":[],\n" +
+                "      \"suggestions\":[]\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"gasType\":\"ozone\",\n" +
+                "      \"aqi\":222,\n" +
+                "      \"pastDay\":[213,444,123,11,87,213,444,123,11,87,65,290],\n" +
+                "      \"pastWeek\":[213,444,123,11,87,213,444,123,11,87],\n" +
+                "      \"pastMonth\":[213,444,123,11,87,213,444,123,11,87,65,290,213,444,123,11,87,213,444,123,11,87,65,290,213,444,123,11,87,213,444,123,11,87,65,290],\n" +
+                "      \"monthly\":[213,444,123,11,87,213,444,123,11,87,65,290],\n" +
+                "      \"healthRisks\":[],\n" +
+                "      \"suggestions\":[]\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"gasType\":\"pm25\",\n" +
+                "      \"aqi\":123,\n" +
+                "      \"pastDay\":[213,444,123,11,87,213,444,123,11,87,65,290],\n" +
+                "      \"pastWeek\":[213,444,123,11,87,213,444,123,11,87],\n" +
+                "      \"pastMonth\":[213,444,123,11,87,213,444,123,11,87,65,290,213,444,123,11,87,213,444,123,11,87,65,290,213,444,123,11,87,213,444,123,11,87,65,290],\n" +
+                "      \"monthly\":[213,444,123,11,87,213,444,123,11,87,65,290],\n" +
+                "      \"healthRisks\":[],\n" +
+                "      \"suggestions\":[]\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"gasType\":\"pm10\",\n" +
+                "      \"aqi\":111,\n" +
+                "      \"pastDay\":[213,444,123,11,87,213,444,123,11,87,65,290],\n" +
+                "      \"pastWeek\":[213,444,123,11,87,213,444,123,11,87],\n" +
+                "      \"pastMonth\":[213,444,123,11,87,213,444,123,11,87,65,290,213,444,123,11,87,213,444,123,11,87,65,290,213,444,123,11,87,213,444,123,11,87,65,290],\n" +
+                "      \"monthly\":[213,444,123,11,87,213,444,123,11,87,65,290],\n" +
+                "      \"healthRisks\":[],\n" +
+                "      \"suggestions\":[]\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"gasType\":\"carbonMonoxide\",\n" +
+                "      \"aqi\":321,\n" +
+                "      \"pastDay\":[213,444,123,11,87,213,444,123,11,87,65,290],\n" +
+                "      \"pastWeek\":[213,444,123,11,87,213,444,123,11,87],\n" +
+                "      \"pastMonth\":[213,444,123,11,87,213,444,123,11,87,65,290,213,444,123,11,87,213,444,123,11,87,65,290,213,444,123,11,87,213,444,123,11,87,65,290],\n" +
+                "      \"monthly\":[213,444,123,11,87,213,444,123,11,87,65,290],\n" +
+                "      \"healthRisks\":[],\n" +
+                "      \"suggestions\":[]\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}";
+        JSONObject mainObj = new JSONObject(jsonStr);
+        String gasSpecific = mainObj.getString("gasSpecific");
+        Log.d("Gas Specific", gasSpecific);
+        JSONArray gases = new JSONArray(gasSpecific);
+
+        DbSingleton db=DbSingleton.getInstance();
+        db.create24HourTable(gases);
+        db.createWeekTable(gases);
+        db.createMonthTable(gases);
+        db.createYearTable(gases);
+        db.createAQITable(gases);
     }
 
     @Override

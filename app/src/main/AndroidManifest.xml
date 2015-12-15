@@ -3,6 +3,7 @@
     package="iiitd.airzentest2" >
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -30,7 +31,16 @@
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="iiitd.airzentest2.MainActivity" />>
+                android:value="iiitd.airzentest2.MainActivity" />
+>
+        </activity>
+        <activity
+            android:name=".GasSpecific"
+            android:label="@string/title_activity_gas_specific"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="iiitd.airzentest2.MainActivity" />
         </activity>
     </application>
 

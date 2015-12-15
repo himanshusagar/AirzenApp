@@ -194,7 +194,11 @@ public class DbSingleton {
 
     public Map<String, Integer> getRawAqi(){
         gas[] values = new gas[5];
+        getWritableDatabase();
         Map<String,Integer> gasData = new HashMap<>();
+        if(mDb==null){
+            Log.e("mDb","mDb is null");
+        }
         Cursor cur = mDb.rawQuery("SELECT *"
                 + " FROM "
                 + DbContract.Aqi.TABLE_NAME, null);
@@ -204,7 +208,14 @@ public class DbSingleton {
         {
             if(cur.getColumnName(i).equals("aqi") ){}
             else {
-                gasData.put(cur.getColumnName(i), cur.getInt(i));
+                if(cur.getCount() > 0)
+                {
+                    gasData.put(cur.getColumnName(i), cur.getInt(i));
+                }
+                else{
+                    Log.e("gasDataEmpty","x");
+                }
+
             }
         }
 
@@ -257,19 +268,20 @@ public class DbSingleton {
     }
 
     public void createAQITable(JSONArray gases) throws JSONException {
+        Log.d("Gas Specific aqi(aaa)", "Abhishek");
         getWritableDatabase();
         Map<String,Integer> gasData = new HashMap<>();
         int currentAqi;
+        Log.d("Gas Specific aqi(aaa)", String.valueOf(gases));
         for (int i=0;i<gases.length();i++){
             currentAqi = gases.getJSONObject(i).getInt("aqi");
             gasData.put(gases.getJSONObject(i).getString("gasType"), currentAqi);
-            Log.d("Gas Specific aqi", String.valueOf(currentAqi));
+            Log.d("Gas Specific aqi(aaa)", String.valueOf(currentAqi));
         }
 
         mDb.delete("CurrentAQI", null, null);
-
-
-
+        Log.d("xxxssss", "xxx");
+        Log.d("gasData", String.valueOf(gasData));
         ContentValues values = new ContentValues();
         values.put("aqi",gasData.get("aqi"));
         values.put("nitrogenDioxide",gasData.get("nitrogenDioxide"));
@@ -316,12 +328,13 @@ public class DbSingleton {
 
     public void create24HourTable(JSONArray gases) throws JSONException {
         getWritableDatabase();
+        Log.d("Gas Specific aqi-24", String.valueOf(gases));
         HashMap<String,int[]> gasData = new HashMap<>();
         int[] pastDay = null;
         for (int i=0;i<gases.length();i++){
             pastDay = jsonToIntArray(gases.getJSONObject(i).getJSONArray("pastDay"));
             gasData.put(gases.getJSONObject(i).getString("gasType"), pastDay);
-            //Log.d("Gas Specific aqi",gases.getJSONObject(i).getString("aqi"));
+            //Log.d("Gas Specific aqi------", gases.getJSONObject(i).getString("aqi"));
         }
 
         mDb.delete(DbContract.Past24Hours.TABLE_NAME,null,null);
@@ -335,19 +348,21 @@ public class DbSingleton {
             values.put(DbContract.Past24Hours.PM25,gasData.get("pm25")[i]);
             values.put(DbContract.Past24Hours.PM10,gasData.get("pm10")[i]);
             values.put(DbContract.Past24Hours.CARBON_MONOXIDE,gasData.get("carbonMonoxide")[i]);
+            Log.d("-Gas Specific aqi-", String.valueOf(gasData.get("carbonMonoxide")[i]));
             //Log.d("ContentValues", String.valueOf(gasData.get("aqi")[i]));
-            mDb.insert(DbContract.Past24Hours.TABLE_NAME,null,values);
+            mDb.insert(DbContract.Past24Hours.TABLE_NAME, null, values);
         }
     }
 
     public void createWeekTable(JSONArray gases) throws JSONException {
         getWritableDatabase();
+        Log.d("Gas Specific aqi-week", String.valueOf(gases));
         HashMap<String,int[]> gasData = new HashMap<>();
         int[] pastWeek = null;
         for (int i=0;i<gases.length();i++){
             pastWeek = jsonToIntArray(gases.getJSONObject(i).getJSONArray("pastWeek"));
             gasData.put(gases.getJSONObject(i).getString("gasType"), pastWeek);
-            //Log.d("Gas Specific aqi",gases.getJSONObject(i).getString("aqi"));
+            Log.d("Gas Specific aqi-week", gases.getJSONObject(i).getString("aqi"));
         }
 
         mDb.delete(DbContract.PastWeek.TABLE_NAME,null,null);
@@ -368,6 +383,7 @@ public class DbSingleton {
 
     public void createMonthTable(JSONArray gases) throws JSONException {
         getWritableDatabase();
+        Log.d("aqi-week-month", "month\n"+String.valueOf(gases));
         HashMap<String,int[]> gasData = new HashMap<>();
         int[] pastMonth = null;
         for (int i=0;i<gases.length();i++){
@@ -394,12 +410,13 @@ public class DbSingleton {
 
     public void createYearTable(JSONArray gases) throws JSONException {
         getWritableDatabase();
+        Log.d("aqi-Year", "Year - "+String.valueOf(gases));
         HashMap<String,int[]> gasData = new HashMap<>();
         int[] pastyear = null;
         for (int i=0;i<gases.length();i++){
             pastyear = jsonToIntArray(gases.getJSONObject(i).getJSONArray("pastYear"));
             gasData.put(gases.getJSONObject(i).getString("gasType"), pastyear);
-            //Log.d("Gas Specific aqi",gases.getJSONObject(i).getString("aqi"));
+            Log.d("Gas Specific aqi-year", gases.getJSONObject(i).getString("aqi"));
         }
 
         mDb.delete(DbContract.PastYear.TABLE_NAME,null,null);
