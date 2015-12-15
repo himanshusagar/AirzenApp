@@ -1,0 +1,49 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="iiitd.airzentest2.ProfileFragment">
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        app:met_baseColor="#0056d3"
+        app:met_primaryColor="#455A64"
+        app:met_errorColor="#ddaa00"
+        app:met_floatingLabel="highlight"
+        android:layout_margin="10dp"
+        android:id="@+id/userEmail" />
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Device ID"
+        app:met_baseColor="#0056d3"
+        app:met_primaryColor="#455A64"
+        app:met_errorColor="#ddaa00"
+        app:met_floatingLabel="highlight"
+        android:layout_margin="10dp"
+        android:id="@+id/deviceId" />
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Device Passkey"
+        app:met_baseColor="#0056d3"
+        app:met_primaryColor="#455A64"
+        app:met_errorColor="#ddaa00"
+        app:met_floatingLabel="highlight"
+        android:layout_margin="10dp"
+        android:password="true"
+        android:id="@+id/devicePasskey" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update"
+        android:id="@+id/button"
+        android:layout_gravity="center_horizontal"
+        android:background="#455A64"
+        android:textColor="#88b1b7" />
+</LinearLayout>
