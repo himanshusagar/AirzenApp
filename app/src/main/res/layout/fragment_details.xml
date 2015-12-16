@@ -10,73 +10,59 @@
     tools:context="iiitd.airzentest2.DetailsFragment"
     android:layout_weight="1">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:orientation="horizontal"
-        android:layout_weight="0.2" >
 
         <include
             layout="@layout/card"
             android:id = "@+id/mostProminent"
             android:clickable="true"
-            />
+            android:layout_weight="0.2"
+            android:layout_height="0dip"
+            android:layout_width="match_parent" />
 
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:orientation="horizontal"
-        android:layout_weight="0.2" >
+
 
         <include
             android:id="@+id/cell1"
-            layout="@layout/card2"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            layout="@layout/card"
+            android:layout_weight="0.2"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
             android:clickable="true"
             />
 
         <include
             android:id="@+id/cell2"
-            layout="@layout/card2"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            layout="@layout/card"
+            android:layout_weight="0.2"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
             android:clickable="true"
             />
 
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:orientation="horizontal"
-        android:layout_weight="0.2" >
 
         <include
             android:id="@+id/cell3"
-            layout="@layout/card2"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            layout="@layout/card"
+            android:layout_weight="0.2"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
             android:clickable="true"
             />
 
         <include
             android:id="@+id/cell4"
-            layout="@layout/card2"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            layout="@layout/card"
+            android:layout_weight="0.2"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
             android:clickable="true"
             />
 
 
 
 
-    </LinearLayout>
+
 
 </LinearLayout>

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +34,8 @@ public class DetailsFragment extends Fragment {
         // Inflate the layout for this fragment
 //        Toast.makeText(getContext(),"Details",Toast.LENGTH_SHORT).show();
 
-        return inflater.inflate(R.layout.fragment_details, container, false);
+        View l = inflater.inflate(R.layout.fragment_details, container, false);
+
         DbSingleton db = DbSingleton.getInstance();
         Map<String,Integer> gasData = new HashMap<>();
         gasData = db.getAqi();
@@ -49,8 +51,8 @@ public class DetailsFragment extends Fragment {
             index++;
         }
 
-        FrameLayout fl = (FrameLayout) findViewById(R.id.mostProminent);
-        CardView main = (CardView) fl.findViewById(R.id.cv);
+        FrameLayout f1 = (FrameLayout) l.findViewById(R.id.mostProminent);
+        CardView main = (CardView) f1.findViewById(R.id.cv);
         main.setMaxCardElevation(8);
         TextView gasName = (TextView) main.findViewById(R.id.gas_name);
         gasName.setText(gasNames[0]);
@@ -70,7 +72,7 @@ public class DetailsFragment extends Fragment {
         });
 
 
-        FrameLayout f2 = (FrameLayout) findViewById(R.id.cell1);
+        FrameLayout f2 = (FrameLayout) l.findViewById(R.id.cell1);
         CardView cv1 = (CardView) f2.findViewById(R.id.cv);
         cv1.setMaxCardElevation(8);
         TextView gasName2 = (TextView) cv1.findViewById(R.id.gas_name);
@@ -90,7 +92,7 @@ public class DetailsFragment extends Fragment {
             }
         });
 
-        FrameLayout f3 = (FrameLayout) findViewById(R.id.cell2);
+        FrameLayout f3 = (FrameLayout) l.findViewById(R.id.cell2);
         CardView cv2 = (CardView) f3.findViewById(R.id.cv);
         cv2.setMaxCardElevation(8);
         TextView gasName3 = (TextView) cv2.findViewById(R.id.gas_name);
@@ -110,7 +112,7 @@ public class DetailsFragment extends Fragment {
             }
         });
 
-        FrameLayout f4 = (FrameLayout) findViewById(R.id.cell3);
+        FrameLayout f4 = (FrameLayout) l.findViewById(R.id.cell3);
         CardView cv3= (CardView) f4.findViewById(R.id.cv);
         cv3.setMaxCardElevation(8);
         TextView gasName4 = (TextView) cv3.findViewById(R.id.gas_name);
@@ -130,7 +132,7 @@ public class DetailsFragment extends Fragment {
             }
         });
 
-        FrameLayout f5 = (FrameLayout) findViewById(R.id.cell4);
+        FrameLayout f5 = (FrameLayout) l.findViewById(R.id.cell4);
         CardView cv4 = (CardView) f5.findViewById(R.id.cv);
         cv4.setMaxCardElevation(8);
         TextView gasName5 = (TextView) cv4.findViewById(R.id.gas_name);
@@ -150,7 +152,7 @@ public class DetailsFragment extends Fragment {
             }
         });
 
-
+        return l;
     }
 
 
