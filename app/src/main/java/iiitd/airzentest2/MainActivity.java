@@ -1,6 +1,7 @@
 package iiitd.airzentest2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+
         SharedPreferences prefs = this.getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
 //        try {
 //            testJson();
@@ -51,8 +53,9 @@ public class MainActivity extends AppCompatActivity {
         Set<String> current = new HashSet<String>();
         current = db.getDefects();
         SharedPreferences rPrefs = this.getSharedPreferences("registration", Context.MODE_PRIVATE);
+        Log.d("-defects-", String.valueOf(current));
         if(!rPrefs.getBoolean("status",false)){
-            Log.d("Status-", String.valueOf(rPrefs.getBoolean("status",false)));
+            //Log.d("Status-", String.valueOf(rPrefs.getBoolean("status",false)));
             Toast.makeText(this,"Please register to a device.",Toast.LENGTH_LONG).show();
         }
         String reader = SendJson.makeQuery(prefs.getInt("age", 1989), current, "A123");
@@ -82,6 +85,11 @@ public class MainActivity extends AppCompatActivity {
                 if (menuItem.getItemId() == R.id.nav_item_profile) {
                     FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
                     xfragmentTransaction.replace(R.id.containerView,new ProfileFragment()).commit();
+                }
+
+                if (menuItem.getItemId() == R.id.nav_item_Preferences) {
+                    Intent intent = new Intent(getApplicationContext(),Preferences.class);
+                    startActivity(intent);
                 }
 
                 return false;

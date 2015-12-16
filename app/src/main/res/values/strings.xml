@@ -9,4 +9,5 @@
     <string name="title_activity_health_risks">HealthRisks</string>
     <string name="title_activity_suggestions">Suggestions</string>
     <string name="title_activity_gas_specific">GasSpecific</string>
+    <string name="title_activity_preferences">Preferences</string>
 </resources>

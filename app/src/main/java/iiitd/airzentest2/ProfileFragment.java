@@ -1,6 +1,5 @@
 package iiitd.airzentest2;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -37,7 +36,8 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         LinearLayout l = (LinearLayout)inflater.inflate(R.layout.fragment_profile, container, false);
-        SharedPreferences prefs = this.getActivity().getSharedPreferences("registration", Context.MODE_PRIVATE);
+
+        SharedPreferences prefs = getContext().getSharedPreferences("registration", 0);
         TextView currentDevice = (TextView)l.findViewById(R.id.currentDevice);
         currentDevice.setText("Current Device - " + prefs.getString("currentDevice", "Not registered to any device."));
         Button button = (Button)l.findViewById(R.id.button);
@@ -62,9 +62,9 @@ public class ProfileFragment extends Fragment {
     }
 
     private void updateCurrentDevice(){
-        SharedPreferences prefs = getActivity().getSharedPreferences("registration", Context.MODE_PRIVATE);
+        SharedPreferences prefs = getContext().getSharedPreferences("registration", 0);
         MaterialEditText deviceId = (MaterialEditText)getActivity().findViewById(R.id.deviceId);
-        prefs.edit().putString("currentDevice",deviceId.getText().toString());
+        prefs.edit().putString("currentDevice",deviceId.getText().toString()).commit();
         TextView currentDevice = (TextView)getActivity().findViewById(R.id.currentDevice);
         currentDevice.setText("Current Device - " + prefs.getString("currentDevice", "Not registered to any device."));
         Log.d("currentDevice",prefs.getString("currentDevice", "Not registered to any device."));
@@ -76,7 +76,7 @@ public class ProfileFragment extends Fragment {
         MaterialEditText deviceId = (MaterialEditText)getActivity().findViewById(R.id.deviceId);
         MaterialEditText passkey = (MaterialEditText)getActivity().findViewById(R.id.devicePasskey);
         String reader = SendJson.makeRegistrationQuery(email.getText().toString(), deviceId.getText().toString(), passkey.getText().toString());
-        SharedPreferences prefs = this.getActivity().getSharedPreferences("registration", Context.MODE_PRIVATE);
+        SharedPreferences prefs = getContext().getSharedPreferences("registration", 0);
         if(reader != null) {
             Log.d("-registration-",reader);
             JSONObject mainObj = new JSONObject(reader);
@@ -84,10 +84,10 @@ public class ProfileFragment extends Fragment {
             Log.d("responseString",mainObj.getString("response"));
             if(response.toString().equals("true")){
                 Log.d("responseString----",mainObj.getString("response"));
-                prefs.edit().putBoolean("status",true);
+                prefs.edit().putBoolean("status",true).commit();
             }
             else{
-                prefs.edit().putBoolean("status",false);
+                prefs.edit().putBoolean("status",false).commit();
             }
 
         }
@@ -98,7 +98,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private boolean checkInputs(){
-        SharedPreferences prefs = this.getActivity().getSharedPreferences("registration", Context.MODE_PRIVATE);
+        SharedPreferences prefs = getContext().getSharedPreferences("registration", 0);
         MaterialEditText email = (MaterialEditText)getActivity().findViewById(R.id.userEmail);
         MaterialEditText deviceId = (MaterialEditText)getActivity().findViewById(R.id.deviceId);
         MaterialEditText passkey = (MaterialEditText)getActivity().findViewById(R.id.devicePasskey);
