@@ -3,6 +3,7 @@ package iiitd.airzentest2;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,7 +18,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import iiitd.airzentest2.db.DbSingleton;
+import iiitd.airzentest2.json.DataParser;
+import iiitd.airzentest2.json.SendJson;
 
 public class MainActivity extends AppCompatActivity {
     DrawerLayout mDrawerLayout;
@@ -28,13 +34,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final SharedPreferences prefs = this.getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
-        try {
-            testJson();
-        } catch (JSONException e) {
-                e.printStackTrace();
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
         }
+        final SharedPreferences prefs = this.getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
+//        try {
+//            testJson();
+//        } catch (JSONException e) {
+//                e.printStackTrace();
+//        }
+
+
         final DbSingleton db = DbSingleton.getInstance();
+        Set<String> current = new HashSet<String>();
+        current = db.getDefects();
+        String reader = SendJson.makeQuery(prefs.getInt("age", 1989), current, "A123");
+        if(reader != null) {
+            getJson(reader);
+        }
+
         initialiseViews();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView) findViewById(R.id.shitstuff);
@@ -184,4 +203,13 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void getJson(String jsonStr) {
+        try {
+            DataParser.parseJsonStr(jsonStr);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import java.util.Random;
 
+import iiitd.airzentest2.db.DbSingleton;
+
 
 public class HomeFragment extends Fragment {
 
@@ -27,12 +29,16 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        final DbSingleton db = DbSingleton.getInstance();
         // Inflate the layout for this fragment
         ScrollView l = (ScrollView) inflater.inflate(R.layout.fragment_home, container, false);
-        Random generator = new Random();
-        int i = generator.nextInt(500);
+//        Random generator = new Random();
+//        int i = generator.nextInt(500);
+
+        final int mainaqi = db.getAqi("aqi");
+
         TextView txt = (TextView) l.findViewById(R.id.textView);
-        String aqi = String.valueOf(i);
+        String aqi = String.valueOf(mainaqi);
         String outOf = "/500";
         String finalString = aqi+outOf;
         Spannable sb = new SpannableString( finalString );
