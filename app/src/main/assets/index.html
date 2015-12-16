@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test guage</title>
+    <script src="justgage.1.0.1.min.js"></script>
+    <script src="raphael.2.1.0.min.js"></script>
+</head>
+<style type="text/css">
+    body{
+        padding: 0px;
+        margin: 0px;
+        background-color:#e4e4e4;
+    }
+
+    #test{
+        height: 136px;
+        width:170px;
+        padding:0px;
+        margin:0px;
+        background-color:#e4e4e4;
+        <!--background-color:#37474F;-->
+    }
+</style>
+<body>
+<div id="test"></div>
+<!--<button id="testButton" onclick="m()">CLick</button>-->
+</body>
+<script>
+    var par=getSearchParameters();
+	var g = new JustGage({
+		id: "test",
+		value: par.val,
+		startAnimationTime:500,
+		min: 0,
+		max: 500,
+        valueFontColor :"#455A64",
+		levelColors:["#9CCC65","#F4FF81","#F44336","#FF9800"],
+		levelColorsGradient:true,
+		title: "AQI",
+	});
+	function getSearchParameters() {
+          var prmstr = window.location.search.substr(1);
+          return prmstr != null && prmstr != "" ? transformToAssocArray(prmstr) : {};
+    }
+
+    function transformToAssocArray( prmstr ) {
+        var params = {};
+        var prmarr = prmstr.split("&");
+        for ( var i = 0; i < prmarr.length; i++) {
+            var tmparr = prmarr[i].split("=");
+            params[tmparr[0]] = tmparr[1];
+        }
+        return params;
+    }
+
+	var m=function(){
+		var par=getSearchParameters();
+		g.refresh(par.val);
+	}
+	
+</script>
+</html>

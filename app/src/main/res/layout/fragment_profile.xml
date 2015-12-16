@@ -9,7 +9,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/currentDevice" />
+        android:id="@+id/currentDevice"
+        android:layout_margin="10dp" />
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:layout_width="match_parent"

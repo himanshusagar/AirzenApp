@@ -18,7 +18,6 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -78,7 +77,7 @@ public class GasSpecific extends AppCompatActivity implements AdapterView.OnItem
         gasAQI = Integer.parseInt(gasAqi.toString());
         msg.setText(getStatement(gasAQI, gasName));
 
-        ExpandableTextView exTextViewH=(ExpandableTextView)findViewById(R.id.exTextViewHealthRisks);
+        /*ExpandableTextView exTextViewH=(ExpandableTextView)findViewById(R.id.exTextViewHealthRisks);
         exTextViewH.setText("-Shortness of breath and pain when taking a deep breath." +
                 "\n-Coughing and sore or scratchy throat." +
                 "\n-Increase the frequency of asthma attacks.");
@@ -86,7 +85,7 @@ public class GasSpecific extends AppCompatActivity implements AdapterView.OnItem
         exTextViewP.setText("-Avoid heavy exertion" +
                 "\n-Conserve energy at home, at work, everywhere. In the long term, it helps to reduce the emissions associated with energy production." +
                 "\n-Consider manual or electric-powered lawn and garden maintenance equipment when replacing a gasoline-powered mower.");
-
+*/
     }
 
     private String getStatement(int gasAQI, String gasName) {

@@ -48,8 +48,73 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
 
-        <ScrollView android:id="@+id/ScrollView01"
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Health Risks"
+                    android:id="@+id/textView3"
+                    android:padding="5dp"
+                    android:textSize="20sp"
+                    android:layout_margin="2dp"
+                    android:background="#455A64"
+                    android:textColor="#e4e4e4"
+                    android:gravity="center_horizontal" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="New Text"
+                    android:id="@+id/healthRisks"
+                    android:padding="5dp"
+                    android:textColor="#88b1b7"
+                    android:layout_margin="5dp"
+                    android:clickable="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Suggestions"
+                    android:id="@+id/textView5"
+                    android:padding="5dp"
+                    android:textSize="20sp"
+                    android:layout_margin="2dp"
+                    android:background="#455A64"
+                    android:textColor="#e4e4e4"
+                    android:gravity="center_horizontal" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="New Text"
+                    android:id="@+id/suggestions"
+                    android:padding="5dp"
+                    android:textColor="#88b1b7"
+                    android:layout_margin="5dp"
+                    android:clickable="true" />
+            </LinearLayout>
+        </LinearLayout>
+        <!--<ScrollView android:id="@+id/ScrollView01"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="2dp"
@@ -146,7 +211,7 @@
             </LinearLayout>
 
 
-        </ScrollView>
+        </ScrollView>-->
     </LinearLayout>
 
 
