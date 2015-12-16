@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-        final SharedPreferences prefs = this.getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
+        SharedPreferences prefs = this.getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
 //        try {
 //            testJson();
 //        } catch (JSONException e) {
@@ -49,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
         final DbSingleton db = DbSingleton.getInstance();
         Set<String> current = new HashSet<String>();
         current = db.getDefects();
+        SharedPreferences rPrefs = this.getSharedPreferences("registration", Context.MODE_PRIVATE);
+        if(!rPrefs.getBoolean("status",false)){
+            Log.d("Status-", String.valueOf(rPrefs.getBoolean("status",false)));
+            Toast.makeText(this,"Please register to a device.",Toast.LENGTH_LONG).show();
+        }
         String reader = SendJson.makeQuery(prefs.getInt("age", 1989), current, "A123");
         if(reader != null) {
             getJson(reader);
