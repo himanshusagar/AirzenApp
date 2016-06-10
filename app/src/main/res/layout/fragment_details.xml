@@ -7,9 +7,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="iiitd.airzentest2.DetailsFragment"
+    tools:context="iiitd.airzentest2.fragment.DetailsFragment"
     android:layout_weight="1">
 
+    <LinearLayout
+        android:id="@+id/mainFieldsContainer"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <include
             layout="@layout/card"
@@ -59,8 +64,24 @@
             android:layout_height="0dip"
             android:clickable="true"
             />
+    </LinearLayout>
 
-
+    <RelativeLayout
+        android:id="@+id/noDataAvailable"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <TextView
+        android:text="@string/dataNotAvaialble"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="85sp"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:textColor="#88b1b7"
+        android:background="#e4e4e4"
+        android:textStyle="bold"
+        android:fontFamily="slim joe" />
+    </RelativeLayout>
 
 
 

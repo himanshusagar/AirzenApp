@@ -24,7 +24,6 @@ public class MakeJson {
             data.put("deviceID", deviceID);
 
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return data;
@@ -42,7 +41,6 @@ public class MakeJson {
             data.put("passkey", passkey);
 
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return data;

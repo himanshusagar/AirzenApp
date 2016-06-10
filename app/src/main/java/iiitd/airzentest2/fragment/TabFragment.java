@@ -1,4 +1,4 @@
-package iiitd.airzentest2;
+package iiitd.airzentest2.fragment;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import iiitd.airzentest2.R;
 
 
 public class TabFragment extends Fragment {

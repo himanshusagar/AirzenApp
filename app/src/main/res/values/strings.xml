@@ -4,10 +4,12 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_health_risks">HealthRisks</string>
     <string name="title_activity_suggestions">Suggestions</string>
     <string name="title_activity_gas_specific">GasSpecific</string>
     <string name="title_activity_preferences">Preferences</string>
+    <string name="dataNotAvaialble">No data available</string>
+    <string name="title_activity_check_network">CheckNetwork</string>
 </resources>

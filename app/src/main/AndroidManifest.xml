@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="iiitd.airzentest2" >
+    package="iiitd.airzentest2">
 
     <application
         android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +20,7 @@
         <activity
             android:name=".HealthRisks"
             android:label="@string/title_activity_health_risks"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="iiitd.airzentest2.MainActivity" />
@@ -28,16 +28,16 @@
         <activity
             android:name=".Suggestions"
             android:label="@string/title_activity_suggestions"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="iiitd.airzentest2.MainActivity" />
->
+            >
         </activity>
         <activity
             android:name=".GasSpecific"
             android:label="@string/title_activity_gas_specific"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="iiitd.airzentest2.MainActivity" />
@@ -45,11 +45,15 @@
         <activity
             android:name=".Preferences"
             android:label="@string/title_activity_preferences"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="iiitd.airzentest2.MainActivity" />
         </activity>
+        <activity
+            android:name=".network.CheckNetwork"
+            android:label="@string/title_activity_check_network"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

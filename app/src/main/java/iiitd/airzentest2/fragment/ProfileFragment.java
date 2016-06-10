@@ -1,4 +1,4 @@
-package iiitd.airzentest2;
+package iiitd.airzentest2.fragment;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import iiitd.airzentest2.R;
 import iiitd.airzentest2.json.SendJson;
 
 public class ProfileFragment extends Fragment {

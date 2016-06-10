@@ -24,6 +24,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import iiitd.airzentest2.db.DbSingleton;
+import iiitd.airzentest2.fragment.ProfileFragment;
+import iiitd.airzentest2.fragment.TabFragment;
 import iiitd.airzentest2.json.DataParser;
 import iiitd.airzentest2.json.SendJson;
 

@@ -46,7 +46,8 @@ public class SendJson {
         //url = "http://sensorize.iiitd.edu.in/api/app";
         URL url = null;
         try {
-            url = new URL("http://sensorize.iiitd.edu.in/api/app/register");
+//            url = new URL("http://sensorize.iiitd.edu.in/api/app/register");
+            url = new URL("http://192.168.0.5:8081/api/app");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -109,7 +110,8 @@ public class SendJson {
         //url = "http://sensorize.iiitd.edu.in/api/app";
         URL url = null;
         try {
-            url = new URL("http://sensorize.iiitd.edu.in/api/app");
+//            url = new URL("http://sensorize.iiitd.edu.in/api/app");
+            url = new URL("http://192.168.0.5:8081/api/app");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

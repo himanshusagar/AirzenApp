@@ -128,7 +128,7 @@ public class DbSingleton {
     }
 
     public int getAqi(String gas){
-        int val = 0;
+        int val = -1;
         getReadOnlyDatabase();
         Cursor cur = mDb.rawQuery("SELECT "
                 + gas
@@ -136,7 +136,8 @@ public class DbSingleton {
                 + DbContract.Aqi.TABLE_NAME, null);
 
         cur.moveToFirst();
-        val = cur.getInt(cur.getColumnIndex(gas));
+        if(!cur.isAfterLast())
+            val = cur.getInt(cur.getColumnIndex(gas));
         return val;
     }
 
@@ -232,17 +233,19 @@ public class DbSingleton {
                 + DbContract.Aqi.TABLE_NAME,null);
 
         cur.moveToFirst();
-        for(int i=0; i < cur.getColumnCount();i++)
-        {
-            if(cur.getColumnName(i).equals("aqi") ){}
-            else {
-                gasData.put(cur.getColumnName(i), cur.getInt(i));
+        if(!cur.isAfterLast()) {
+            for (int i = 0; i < cur.getColumnCount(); i++) {
+                if (cur.getColumnName(i).equals("aqi")) {
+                } else {
+                    gasData.put(cur.getColumnName(i), cur.getInt(i));
+                }
             }
-        }
-        Map<String, Integer> cleanMap = clean(gasData);
-        Map<String, Integer> sortedMap = sortByComparator(cleanMap);
+            Map<String, Integer> cleanMap = clean(gasData);
+            Map<String, Integer> sortedMap = sortByComparator(cleanMap);
 
-        return sortedMap;
+            return sortedMap;
+        }
+        return null;
     }
 
     private Map<String, Integer> clean(Map<String, Integer> gasData) {

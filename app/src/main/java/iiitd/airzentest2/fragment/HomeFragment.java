@@ -1,4 +1,4 @@
-package iiitd.airzentest2;
+package iiitd.airzentest2.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,9 +12,13 @@ import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ScrollView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import iiitd.airzentest2.GasSpecific;
+import iiitd.airzentest2.HealthRisks;
+import iiitd.airzentest2.R;
+import iiitd.airzentest2.Suggestions;
 import iiitd.airzentest2.db.DbSingleton;
 
 
@@ -31,7 +35,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         final DbSingleton db = DbSingleton.getInstance();
         // Inflate the layout for this fragment
-        ScrollView l = (ScrollView) inflater.inflate(R.layout.fragment_home, container, false);
+        LinearLayout l = (LinearLayout) inflater.inflate(R.layout.fragment_home, container, false);
 //        Random generator = new Random();
 //        int i = generator.nextInt(500);
 
@@ -69,49 +73,52 @@ public class HomeFragment extends Fragment {
                 }
         );
         TextView txt = (TextView) l.findViewById(R.id.textView);
-        if(mainaqi<=50){
-            txt.setText("Good");
-            txt.setTextColor(Color.parseColor("#00b250"));
-        }
-        else if(mainaqi<=100){
-            txt.setText("Satisfactory");
-            txt.setTextColor(Color.parseColor("#92c954"));
-        }
-        else if(mainaqi<=250){
-            txt.setText("Moderate");
-            txt.setTextColor(Color.parseColor("#e4b7b4"));
-        }
-        else if(mainaqi<=350){
-            txt.setText("Poor!");
-            txt.setTextColor(Color.parseColor("#fbbf0f"));
-        }
-        else if(mainaqi<=400){
-            txt.setText("Very Poor!");
-            txt.setTextColor(Color.parseColor("#ec2124"));
-        }
-        else if(mainaqi<=500){
-            txt.setText("Severe!");
-            txt.setTextColor(Color.parseColor("#be1d23"));
-        }
 
-        TextView majorpol = (TextView)l.findViewById(R.id.majorPol);
-        majorpol.setText("Major Pollutant - PM 2.5");
-        //Toast.makeText(getContext(), "Home", Toast.LENGTH_SHORT).show();
-
-        mWebView = (WebView) l.findViewById(R.id.webview);
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.setWebChromeClient(new WebChromeClient());
-        mWebView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return (event.getAction() == MotionEvent.ACTION_MOVE);
+        if(mainaqi==-1){
+            l.findViewById(R.id.mainDataContainer).setVisibility(View.GONE);
+            l.findViewById(R.id.noDataAvailable).setVisibility(View.VISIBLE);
+        }
+        else {
+            l.findViewById(R.id.mainDataContainer).setVisibility(View.VISIBLE);
+            l.findViewById(R.id.noDataAvailable).setVisibility(View.GONE);
+            if (mainaqi <= 50) {
+                txt.setText("Good");
+                txt.setTextColor(Color.parseColor("#00b250"));
+            } else if (mainaqi <= 100) {
+                txt.setText("Satisfactory");
+                txt.setTextColor(Color.parseColor("#92c954"));
+            } else if (mainaqi <= 250) {
+                txt.setText("Moderate");
+                txt.setTextColor(Color.parseColor("#e4b7b4"));
+            } else if (mainaqi <= 350) {
+                txt.setText("Poor!");
+                txt.setTextColor(Color.parseColor("#fbbf0f"));
+            } else if (mainaqi <= 400) {
+                txt.setText("Very Poor!");
+                txt.setTextColor(Color.parseColor("#ec2124"));
+            } else if (mainaqi <= 500) {
+                txt.setText("Severe!");
+                txt.setTextColor(Color.parseColor("#be1d23"));
             }
-        });
 
-        mWebView.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                //String user = ((EditText) findViewById(R.id.edit_text)).getText().toString();
+            TextView majorpol = (TextView) l.findViewById(R.id.majorPol);
+            majorpol.setText("Major Pollutant - PM 2.5");
+            //Toast.makeText(getContext(), "Home", Toast.LENGTH_SHORT).show();
+
+            mWebView = (WebView) l.findViewById(R.id.webview);
+            mWebView.getSettings().setJavaScriptEnabled(true);
+            mWebView.setWebChromeClient(new WebChromeClient());
+            mWebView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return (event.getAction() == MotionEvent.ACTION_MOVE);
+                }
+            });
+
+            mWebView.setWebViewClient(new WebViewClient() {
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    //String user = ((EditText) findViewById(R.id.edit_text)).getText().toString();
                /* if (user.isEmpty()) {
                     user = "World";
                 }*/
@@ -120,9 +127,10 @@ public class HomeFragment extends Fragment {
                 /*String javascript="javascript: document.getElementById('msg').innerHTML='Hello "+user+"!';";
                 view.loadUrl(javascript);
                 */
-            }
-        });
-        refreshWebView(mainaqi);
+                }
+            });
+            refreshWebView(mainaqi);
+        }
         return l;
     }
 
