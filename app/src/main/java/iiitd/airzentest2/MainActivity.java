@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,9 +28,18 @@ import iiitd.airzentest2.db.DbSingleton;
 import iiitd.airzentest2.fragment.ProfileFragment;
 import iiitd.airzentest2.fragment.TabFragment;
 import iiitd.airzentest2.json.DataParser;
-import iiitd.airzentest2.json.SendJson;
+import iiitd.airzentest2.network.api.ServerApi;
+import iiitd.airzentest2.network.model.ServerObject;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
+    public static final String IP_ADDR = "http://192.168.55.220:8081/";
+    public static final String SERVER_URL = "http://192.168.55.220:8081/api/app";
     DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
     FragmentManager mFragmentManager;
@@ -38,10 +48,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar t = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(t);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
+
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+
+
 
         SharedPreferences prefs = this.getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
 //        try {
@@ -54,26 +74,34 @@ public class MainActivity extends AppCompatActivity {
         final DbSingleton db = DbSingleton.getInstance();
         Set<String> current = new HashSet<String>();
         current = db.getDefects();
+
         SharedPreferences rPrefs = this.getSharedPreferences("registration", Context.MODE_PRIVATE);
         Log.d("-defects-", String.valueOf(current));
+
         if(!rPrefs.getBoolean("status",false)){
             //Log.d("Status-", String.valueOf(rPrefs.getBoolean("status",false)));
             Toast.makeText(this,"Please register to a device.",Toast.LENGTH_LONG).show();
         }
-        String reader = SendJson.makeQuery(prefs.getInt("age", 1989), current, "A123");
+
+        //Unused
+       /* String reader = SendJson.makeQuery(prefs.getInt("age", 1989), current, "A123");
         if(reader != null) {
             getJson(reader);
         }
+        */
+        //handleDatabase();
 
-        initialiseViews();
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView) findViewById(R.id.shitstuff);
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
         mFragmentTransaction.replace(R.id.containerView,new TabFragment()).commit();
+
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
+            public boolean onNavigationItemSelected(MenuItem menuItem)
+            {
                 mDrawerLayout.closeDrawers();
 
 
@@ -114,10 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void initialiseViews(){
 
-
-    }
     private void testJson() throws JSONException {
         String jsonStr = "{\n" +
                 "  \"inferences\":[\"Test Inference\",\"ddddd\"],\n" +
@@ -190,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Gas Specific", gasSpecific);
         JSONArray gases = new JSONArray(gasSpecific);
 
-        DbSingleton db=DbSingleton.getInstance();
+        DbSingleton db = DbSingleton.getInstance();
         db.create24HourTable(gases);
         db.createWeekTable(gases);
         db.createMonthTable(gases);
@@ -220,12 +245,65 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Unused
     public void getJson(String jsonStr) {
         try {
             DataParser.parseJsonStr(jsonStr);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void handleDatabase()
+    {
+       // protected ServerObject serverObject;
+        Retrofit restAdapter = new Retrofit.Builder()
+                .baseUrl(MainActivity.IP_ADDR)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();                                        //create an adapter for retrofit with base url
+
+        ServerApi serverService = restAdapter.create(ServerApi.class);
+
+        iiitd.airzentest2.network.model.GasSpecific[] array = {new iiitd.airzentest2.network.model.GasSpecific()};
+        String[] array2 = {"My Inferences"};
+
+
+
+        ServerObject bodyObject = new ServerObject(array
+                ,  array2);
+
+
+        Call<ServerObject> call = serverService.loadObject(bodyObject);
+        call.enqueue(new Callback<ServerObject>() {
+            @Override
+            public void onResponse(Call<ServerObject> call, Response<ServerObject> response)
+            {
+                ServerObject answer = response.body();
+
+                //serverObject = answer;
+                Log.d("YO" , " ");
+                answer.toString();
+                DataParser.initialiseTables(answer);
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ServerObject> call, Throwable t)
+            {
+                Log.d("Fail",call.toString());
+                //serverObject = null;
+            }
+        });
+
+
+
+
+
+
+
+
+
     }
 
 }

@@ -7,36 +7,28 @@ import android.util.Log;
  */
 public class GasSpecific
 {
+
+
+
     private String[] healthRisks;
 
-    private String[] pastDay;
+    private int[] pastDay;
 
     public GasSpecific() {
     }
 
-    public GasSpecific(String[] healthRisks, String[] pastDay, String gasType, String[] pastYear, String aqi, String[] pastWeek, String[] suggestions, String[] pastMonth) {
-        this.healthRisks = healthRisks;
-        this.pastDay = pastDay;
-        this.gasType = gasType;
-        this.pastYear = pastYear;
-        this.aqi = aqi;
-        this.pastWeek = pastWeek;
-        this.suggestions = suggestions;
-
-        this.pastMonth = pastMonth;
-    }
 
     private String gasType;
 
-    private String[] pastYear;
+    private int[] pastYear;
 
-    private String aqi;
+    private int aqi;
 
-    private String[] pastWeek;
+    private int[] pastWeek;
 
     private String[] suggestions;
 
-    private String[] pastMonth;
+    private int[] pastMonth;
 
     public String[] getHealthRisks ()
     {
@@ -48,12 +40,12 @@ public class GasSpecific
         this.healthRisks = healthRisks;
     }
 
-    public String[] getPastDay ()
+    public int[] getPastDay ()
     {
         return pastDay;
     }
 
-    public void setPastDay (String[] pastDay)
+    public void setPastDay (int[] pastDay)
     {
         this.pastDay = pastDay;
     }
@@ -68,32 +60,32 @@ public class GasSpecific
         this.gasType = gasType;
     }
 
-    public String[] getPastYear ()
+    public int[] getPastYear ()
     {
         return pastYear;
     }
 
-    public void setPastYear (String[] pastYear)
+    public void setPastYear (int[] pastYear)
     {
         this.pastYear = pastYear;
     }
 
-    public String getAqi ()
+    public int getAqi ()
     {
         return aqi;
     }
 
-    public void setAqi (String aqi)
+    public void setAqi (int aqi)
     {
         this.aqi = aqi;
     }
 
-    public String[] getPastWeek ()
+    public int[] getPastWeek ()
     {
         return pastWeek;
     }
 
-    public void setPastWeek (String[] pastWeek)
+    public void setPastWeek (int[] pastWeek)
     {
         this.pastWeek = pastWeek;
     }
@@ -108,12 +100,12 @@ public class GasSpecific
         this.suggestions = suggestions;
     }
 
-    public String[] getPastMonth ()
+    public int[] getPastMonth ()
     {
         return pastMonth;
     }
 
-    public void setPastMonth (String[] pastMonth)
+    public void setPastMonth (int[] pastMonth)
     {
         this.pastMonth = pastMonth;
     }

@@ -14,7 +14,11 @@ public class HealthRisks extends AppCompatActivity {
         setContentView(R.layout.activity_health_risks);
         Toolbar t = (Toolbar)findViewById(R.id.toolbar2);
         setSupportActionBar(t);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
 
 
         //getActionBar().setDisplayHomeAsUpEnabled(true);

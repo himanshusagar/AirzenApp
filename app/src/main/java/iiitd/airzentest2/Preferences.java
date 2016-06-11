@@ -47,7 +47,11 @@ public class Preferences extends AppCompatActivity implements AdapterView.OnItem
         setContentView(R.layout.activity_preferences);
         Toolbar t = (Toolbar)findViewById(R.id.toolbar4);
         setSupportActionBar(t);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
         FrameLayout f = (FrameLayout) findViewById(R.id.fillDisease);
         textView = (AutoCompleteTextView) f.findViewById(R.id.diseases);
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, item);

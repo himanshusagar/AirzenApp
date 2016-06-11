@@ -16,10 +16,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Set;
 
+import iiitd.airzentest2.MainActivity;
+
 
 public class SendJson {
 
 
+    //Unused
     public static String makeQuery(int yearOfBirth, Set defects, String deviceID){
         JSONObject data = MakeJson.wrapPreferences(yearOfBirth , defects, "A123");
         Log.d("JsonObject", String.valueOf(data));
@@ -106,12 +109,13 @@ public class SendJson {
     }
 
 
+    //Unused
     public static String SendData2(JSONObject data) {
         //url = "http://sensorize.iiitd.edu.in/api/app";
         URL url = null;
         try {
 //            url = new URL("http://sensorize.iiitd.edu.in/api/app");
-            url = new URL("http://192.168.0.5:8081/api/app");
+            url = new URL(MainActivity.SERVER_URL);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

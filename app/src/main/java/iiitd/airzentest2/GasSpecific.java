@@ -39,7 +39,11 @@ public class GasSpecific extends AppCompatActivity implements AdapterView.OnItem
         setContentView(R.layout.activity_gas_specific);
         Toolbar t = (Toolbar)findViewById(R.id.toolbar3);
         setSupportActionBar(t);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
 
         DbSingleton db = DbSingleton.getInstance();
         Map<String,Integer> gasData = db.getRawAqi();

@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment {
             } else if (mainaqi <= 400) {
                 txt.setText("Very Poor!");
                 txt.setTextColor(Color.parseColor("#ec2124"));
-            } else if (mainaqi <= 500) {
+            } else  {
                 txt.setText("Severe!");
                 txt.setTextColor(Color.parseColor("#be1d23"));
             }

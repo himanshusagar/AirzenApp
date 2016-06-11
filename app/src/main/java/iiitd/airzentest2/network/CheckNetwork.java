@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import iiitd.airzentest2.MainActivity;
 import iiitd.airzentest2.R;
 import iiitd.airzentest2.network.api.ServerApi;
 import iiitd.airzentest2.network.model.GasSpecific;
@@ -20,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CheckNetwork extends AppCompatActivity
 {
-    String API = "http://192.168.55.220:8081/";
+    String API = MainActivity.IP_ADDR;
 
 
     @Override

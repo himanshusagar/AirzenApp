@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import iiitd.airzentest2.network.model.ServerObject;
+
 /**
  * Created by Abhishek on 14-12-2015.
  */
@@ -270,12 +272,45 @@ public class DbSingleton {
 
     }
 
+
+    public void generateAQITable(ServerObject sO)
+    {
+        Log.d("Gas Specific aqi(aaa)", "XOXO");
+
+        getWritableDatabase();
+        Map<String,Integer> gasData = new HashMap<>();
+        int currentAqi;
+        int gasSpecSize = sO.getGasSpecific().length;
+        for (int i = 0 ; i < gasSpecSize ; i++)
+        {
+            currentAqi = sO.getGasSpecific()[i].getAqi();
+            gasData.put(sO.getGasSpecific()[i].getGasType(), currentAqi);
+        }
+        mDb.delete("CurrentAQI", null, null);
+        ContentValues values = new ContentValues();
+        values.put("aqi",gasData.get("aqi"));
+        values.put("nitrogenDioxide",gasData.get("nitrogenDioxide"));
+        values.put("ozone",gasData.get("ozone"));
+        values.put("pm25",gasData.get("pm25"));
+        values.put("pm10",gasData.get("pm10"));
+        values.put("carbonMonoxide", gasData.get("carbonMonoxide"));
+
+        Log.d("ContentValues", String.valueOf(gasData.get("aqi")));
+        mDb.insert("CurrentAQI", null, values);
+
+
+
+
+    }
+
+    //UNused
     public void createAQITable(JSONArray gases) throws JSONException {
         Log.d("Gas Specific aqi(aaa)", "Abhishek");
         getWritableDatabase();
         Map<String,Integer> gasData = new HashMap<>();
         int currentAqi;
         Log.d("Gas Specific aqi(aaa)", String.valueOf(gases));
+
         for (int i=0;i<gases.length();i++){
             currentAqi = gases.getJSONObject(i).getInt("aqi");
             gasData.put(gases.getJSONObject(i).getString("gasType"), currentAqi);
@@ -329,6 +364,42 @@ public class DbSingleton {
         }
     }
 
+    public void generate24HourTable(ServerObject sO)
+    {
+        getWritableDatabase();
+        Log.d("24 Hour Table" ,"Inside");
+        HashMap<String,int[]> gasData = new HashMap<>();
+        int[] pastDay = null;
+
+        int sizeGasSpec = 0;
+        if(sO.getGasSpecific()!=null)
+            sizeGasSpec =  sO.getGasSpecific().length;
+
+        for (int i = 0; i < sizeGasSpec ; i++)
+        {
+            pastDay = sO.getGasSpecific()[i].getPastDay();
+            gasData.put(sO.getGasSpecific()[i].getGasType() , pastDay);
+
+        }
+        mDb.delete(DbContract.Past24Hours.TABLE_NAME,null,null);
+
+        for (int i = 0; i < pastDay.length; i++) {
+            ContentValues values=new ContentValues();
+            values.put(DbContract.Past24Hours.HOUR_NUMBER,i);
+            //values.put("aqi",gasData.get("aqi")[i]);
+            values.put(DbContract.Past24Hours.NITROGEN_DIOXIDE,gasData.get("nitrogenDioxide")[i]);
+            values.put(DbContract.Past24Hours.OZONE,gasData.get("ozone")[i]);
+            values.put(DbContract.Past24Hours.PM25,gasData.get("pm25")[i]);
+            values.put(DbContract.Past24Hours.PM10,gasData.get("pm10")[i]);
+            values.put(DbContract.Past24Hours.CARBON_MONOXIDE,gasData.get("carbonMonoxide")[i]);
+            Log.d("-Gas Specific aqi-", String.valueOf(gasData.get("carbonMonoxide")[i]));
+            //Log.d("ContentValues", String.valueOf(gasData.get("aqi")[i]));
+            mDb.insert(DbContract.Past24Hours.TABLE_NAME, null, values);
+        }
+
+    }
+
+    //UNused
     public void create24HourTable(JSONArray gases) throws JSONException {
         getWritableDatabase();
         Log.d("Gas Specific aqi-24", String.valueOf(gases));
@@ -357,6 +428,42 @@ public class DbSingleton {
         }
     }
 
+
+    public void generateWeekTable(ServerObject sO)
+    {
+        getWritableDatabase();
+        HashMap<String,int[]> gasData = new HashMap<>();
+        int[] pastWeek = null;
+
+        int sizeGasSpec = 0;
+        if(sO.getGasSpecific()!=null)
+            sizeGasSpec =  sO.getGasSpecific().length;
+
+
+        for (int i = 0; i < sizeGasSpec ; i++)
+        {
+            pastWeek = sO.getGasSpecific()[i].getPastWeek();
+            gasData.put(sO.getGasSpecific()[i].getGasType() , pastWeek);
+
+        }
+
+        mDb.delete(DbContract.PastWeek.TABLE_NAME,null,null);
+
+        for (int i = 0; i < pastWeek.length; i++) {
+            ContentValues values=new ContentValues();
+            values.put(DbContract.PastWeek.DAY_NUMBER,i);
+            //values.put("aqi",gasData.get("aqi")[i]);
+            values.put(DbContract.PastWeek.NITROGEN_DIOXIDE,gasData.get("nitrogenDioxide")[i]);
+            values.put(DbContract.PastWeek.OZONE,gasData.get("ozone")[i]);
+            values.put(DbContract.PastWeek.PM25,gasData.get("pm25")[i]);
+            values.put(DbContract.PastWeek.PM10,gasData.get("pm10")[i]);
+            values.put(DbContract.PastWeek.CARBON_MONOXIDE,gasData.get("carbonMonoxide")[i]);
+            //Log.d("ContentValues", String.valueOf(gasData.get("aqi")[i]));
+            mDb.insert(DbContract.PastWeek.TABLE_NAME,null,values);
+        }
+    }
+
+    //UNused
     public void createWeekTable(JSONArray gases) throws JSONException {
         getWritableDatabase();
         Log.d("Gas Specific aqi-week", String.valueOf(gases));
@@ -384,6 +491,44 @@ public class DbSingleton {
         }
     }
 
+
+    public void generateMonthTable(ServerObject sO)
+    {
+        getWritableDatabase();
+        HashMap<String,int[]> gasData = new HashMap<>();
+        int[] pastMonth = null;
+
+        int sizeGasSpec = 0;
+        if(sO.getGasSpecific()!=null)
+            sizeGasSpec =  sO.getGasSpecific().length;
+
+
+        for (int i = 0; i < sizeGasSpec ; i++)
+        {
+            pastMonth = sO.getGasSpecific()[i].getPastMonth();
+            gasData.put(sO.getGasSpecific()[i].getGasType() , pastMonth);
+
+        }
+
+        mDb.delete(DbContract.PastMonth.TABLE_NAME,null,null);
+
+        for (int i = 0; i < pastMonth.length; i++) {
+            ContentValues values=new ContentValues();
+            values.put(DbContract.PastMonth.DAY_NUMBER,i);
+            //values.put("aqi",gasData.get("aqi")[i]);
+            values.put(DbContract.PastMonth.NITROGEN_DIOXIDE,gasData.get("nitrogenDioxide")[i]);
+            values.put(DbContract.PastMonth.OZONE,gasData.get("ozone")[i]);
+            values.put(DbContract.PastMonth.PM25,gasData.get("pm25")[i]);
+            values.put(DbContract.PastMonth.PM10,gasData.get("pm10")[i]);
+            values.put(DbContract.PastMonth.CARBON_MONOXIDE,gasData.get("carbonMonoxide")[i]);
+            //Log.d("ContentValues", String.valueOf(gasData.get("aqi")[i]));
+            mDb.insert(DbContract.PastMonth.TABLE_NAME,null,values);
+        }
+
+
+    }
+
+    //UNused
     public void createMonthTable(JSONArray gases) throws JSONException {
         getWritableDatabase();
         Log.d("aqi-week-month", "month\n"+String.valueOf(gases));
@@ -411,6 +556,44 @@ public class DbSingleton {
         }
     }
 
+
+    public void generateYearTable(ServerObject sO)
+    {
+        getWritableDatabase();
+
+        HashMap<String,int[]> gasData = new HashMap<>();
+        int[] pastyear = null;
+
+
+        int sizeGasSpec = 0;
+        if(sO.getGasSpecific()!=null)
+            sizeGasSpec =  sO.getGasSpecific().length;
+
+
+        for (int i = 0; i < sizeGasSpec ; i++)
+        {
+            pastyear = sO.getGasSpecific()[i].getPastYear();
+            gasData.put(sO.getGasSpecific()[i].getGasType() , pastyear);
+        }
+
+        mDb.delete(DbContract.PastYear.TABLE_NAME,null,null);
+
+        for (int i = 0; i < pastyear.length; i++) {
+            ContentValues values=new ContentValues();
+            values.put(DbContract.PastYear.MONTH_NUMBER,i);
+            //values.put("aqi",gasData.get("aqi")[i]);
+            values.put(DbContract.PastYear.NITROGEN_DIOXIDE,gasData.get("nitrogenDioxide")[i]);
+            values.put(DbContract.PastYear.OZONE,gasData.get("ozone")[i]);
+            values.put(DbContract.PastYear.PM25,gasData.get("pm25")[i]);
+            values.put(DbContract.PastYear.PM10,gasData.get("pm10")[i]);
+            values.put(DbContract.PastYear.CARBON_MONOXIDE,gasData.get("carbonMonoxide")[i]);
+            //Log.d("ContentValues", String.valueOf(gasData.get("aqi")[i]));
+            mDb.insert(DbContract.PastYear.TABLE_NAME,null,values);
+        }
+
+
+    }
+    //UNused
     public void createYearTable(JSONArray gases) throws JSONException {
         getWritableDatabase();
         Log.d("aqi-Year", "Year - "+String.valueOf(gases));
