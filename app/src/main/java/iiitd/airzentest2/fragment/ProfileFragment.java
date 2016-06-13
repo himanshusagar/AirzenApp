@@ -40,7 +40,9 @@ public class ProfileFragment extends Fragment {
 
         SharedPreferences prefs = getContext().getSharedPreferences("registration", 0);
         TextView currentDevice = (TextView)l.findViewById(R.id.currentDevice);
+
         currentDevice.setText("Current Device - " + prefs.getString("currentDevice", "Not registered to any device."));
+
         Button button = (Button)l.findViewById(R.id.button);
         button.setOnClickListener(
                 new View.OnClickListener() {
@@ -65,7 +67,7 @@ public class ProfileFragment extends Fragment {
     private void updateCurrentDevice(){
         SharedPreferences prefs = getContext().getSharedPreferences("registration", 0);
         MaterialEditText deviceId = (MaterialEditText)getActivity().findViewById(R.id.deviceId);
-        prefs.edit().putString("currentDevice",deviceId.getText().toString()).commit();
+        prefs.edit().putString("currentDevice",deviceId.getText().toString()).apply();
         TextView currentDevice = (TextView)getActivity().findViewById(R.id.currentDevice);
         currentDevice.setText("Current Device - " + prefs.getString("currentDevice", "Not registered to any device."));
         Log.d("currentDevice",prefs.getString("currentDevice", "Not registered to any device."));
@@ -83,12 +85,13 @@ public class ProfileFragment extends Fragment {
             JSONObject mainObj = new JSONObject(reader);
             String response = mainObj.getString("response");
             Log.d("responseString",mainObj.getString("response"));
-            if(response.toString().equals("true")){
+
+            if(response.equals("true")){
                 Log.d("responseString----",mainObj.getString("response"));
-                prefs.edit().putBoolean("status",true).commit();
+                prefs.edit().putBoolean("status",true).apply();
             }
             else{
-                prefs.edit().putBoolean("status",false).commit();
+                prefs.edit().putBoolean("status",false).apply();
             }
 
         }

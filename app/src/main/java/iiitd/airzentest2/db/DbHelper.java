@@ -22,7 +22,8 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(DbContract.PastYear.CREATE_TABLE);
         Log.d("asasasa", "asasa");
         db.execSQL(DbContract.Aqi.CREATE_TABLE);
-        Log.d("asasasa", "asasa");
+        db.execSQL(DbContract.TimeStamp.CREATE_TABLE);
+        Log.d("created", "asasa");
     }
 
     @Override
@@ -33,6 +34,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(DbContract.PastWeek.DELETE_TABLE);
         db.execSQL(DbContract.PastMonth.DELETE_TABLE);
         db.execSQL(DbContract.PastYear.DELETE_TABLE);
+        db.execSQL(DbContract.TimeStamp.DELETE_TABLE);
         onCreate(db);
     }
 }

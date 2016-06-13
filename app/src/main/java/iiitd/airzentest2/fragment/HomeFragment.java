@@ -1,10 +1,12 @@
 package iiitd.airzentest2.fragment;
 
 import android.content.Intent;
+import android.database.SQLException;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,17 +33,18 @@ public class HomeFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+
+    {
         final DbSingleton db = DbSingleton.getInstance();
-        // Inflate the layout for this fragment
+
         LinearLayout l = (LinearLayout) inflater.inflate(R.layout.fragment_home, container, false);
-//        Random generator = new Random();
-//        int i = generator.nextInt(500);
 
         final int mainaqi = db.getAqi("aqi");
 
-        setMessage(mainaqi);
+
+
+
         TextView healthRisks = (TextView)l.findViewById(R.id.healthRisks);
         healthRisks.setOnClickListener(
                 new View.OnClickListener() {
@@ -74,11 +77,13 @@ public class HomeFragment extends Fragment {
         );
         TextView txt = (TextView) l.findViewById(R.id.textView);
 
-        if(mainaqi==-1){
+        if(mainaqi==-1)
+        {
             l.findViewById(R.id.mainDataContainer).setVisibility(View.GONE);
             l.findViewById(R.id.noDataAvailable).setVisibility(View.VISIBLE);
         }
-        else {
+        else
+        {
             l.findViewById(R.id.mainDataContainer).setVisibility(View.VISIBLE);
             l.findViewById(R.id.noDataAvailable).setVisibility(View.GONE);
             if (mainaqi <= 50) {
@@ -101,7 +106,8 @@ public class HomeFragment extends Fragment {
                 txt.setTextColor(Color.parseColor("#be1d23"));
             }
 
-            TextView majorpol = (TextView) l.findViewById(R.id.majorPol);
+            TextView majorpol = (TextView) gasSpecific;
+
             majorpol.setText("Major Pollutant - PM 2.5");
             //Toast.makeText(getContext(), "Home", Toast.LENGTH_SHORT).show();
 
@@ -118,45 +124,40 @@ public class HomeFragment extends Fragment {
             mWebView.setWebViewClient(new WebViewClient() {
                 @Override
                 public void onPageFinished(WebView view, String url) {
-                    //String user = ((EditText) findViewById(R.id.edit_text)).getText().toString();
-               /* if (user.isEmpty()) {
-                    user = "World";
-                }*/
-                /*String javascript="javascript: m();";
-                view.loadUrl(javascript);*/
-                /*String javascript="javascript: document.getElementById('msg').innerHTML='Hello "+user+"!';";
-                view.loadUrl(javascript);
-                */
+
                 }
             });
             refreshWebView(mainaqi);
         }
-        return l;
+
+
+        TextView timeStamp = (TextView)l.findViewById(R.id.textViewTimpStamp);
+        Log.d("TimeS","Gonna Query");
+
+        try {
+            timeStamp.setText(
+
+                    db.getTimeStamp()
+            );
+            return l;
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+
+            timeStamp.setText(String.valueOf("ni milla"));
+            return l;
+        }
+
+        //return l;
     }
 
-    private void setMessage(int mainaqi){
-        //final int mainaqi = db.getAqi("aqi");
-
-
-        /*String aqi = String.valueOf(mainaqi);
-        String outOf = "/500";
-        String finalString = aqi+outOf;
-        Spannable sb = new SpannableString( finalString );
-        sb.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), finalString.indexOf(aqi), aqi.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE); //bold
-        sb.setSpan(new AbsoluteSizeSpan(250), 0, aqi.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//resize size
-        sb.setSpan(new AbsoluteSizeSpan(70), finalString.indexOf(outOf), finalString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//resize size
-        txt.setText(sb);*/
-    }
 
     private void refreshWebView(int aqi) {
-        /*
-        Random rand=new Random();
-        int num=rand.nextInt(500);
-        */
+
         mWebView.loadUrl(URL + Integer.toString(aqi));
 
-        /*TextView aqiText=(TextView)getActivity().findViewById(R.id.aqiTextView);
-        aqiText.setText("AQI - " + Integer.toString(aqi));*/
+
     }
 
 }

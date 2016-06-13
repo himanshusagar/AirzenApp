@@ -34,7 +34,8 @@ public class GasSpecific extends AppCompatActivity implements AdapterView.OnItem
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gas_specific);
         Toolbar t = (Toolbar)findViewById(R.id.toolbar3);

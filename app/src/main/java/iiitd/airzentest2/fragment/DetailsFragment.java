@@ -38,9 +38,11 @@ public class DetailsFragment extends Fragment {
         DbSingleton db = DbSingleton.getInstance();
         Map<String,Integer> gasData = new HashMap<>();
         gasData = db.getAqi();
-        if(gasData!=null) {
+        if(gasData!=null)
+        {
             l.findViewById(R.id.noDataAvailable).setVisibility(View.GONE);
             l.findViewById(R.id.mainFieldsContainer).setVisibility(View.VISIBLE);
+
             int s = gasData.size();
             int[] aqiValues = new int[s];
             final String[] gasNames = new String[s];
@@ -53,106 +55,8 @@ public class DetailsFragment extends Fragment {
                 index++;
             }
 
-            FrameLayout f1 = (FrameLayout) l.findViewById(R.id.mostProminent);
-            CardView main = (CardView) f1.findViewById(R.id.cv);
-            main.setMaxCardElevation(8);
-            TextView gasName = (TextView) main.findViewById(R.id.gas_name);
-            gasName.setText(gasNames[0]);
-            TextView gasAqi = (TextView) main.findViewById(R.id.gas_aqi);
-            int aqi = aqiValues[0];
-            gasAqi.setText("(" + aqi + ")");
-            MyProgressBar mainBar = (MyProgressBar) main.findViewById(R.id.prog_bar);
-            mainBar.setProgress(aqi);
-            main.setOnClickListener(new View.OnClickListener() {
+            NewHandleFrameLayouts(gasNames , aqiValues, l);
 
-                @Override
-                public void onClick(View v) {
-                    gasSpecific(0, gasNames[0]);
-                    // TODO Auto-generated method stub
-                    //DO you work here
-                }
-            });
-
-
-            FrameLayout f2 = (FrameLayout) l.findViewById(R.id.cell1);
-            CardView cv1 = (CardView) f2.findViewById(R.id.cv);
-            cv1.setMaxCardElevation(8);
-            TextView gasName2 = (TextView) cv1.findViewById(R.id.gas_name);
-            gasName2.setText(gasNames[1]);
-            TextView gasAqi2 = (TextView) cv1.findViewById(R.id.gas_aqi);
-            int aqi2 = aqiValues[1];
-            gasAqi2.setText("(" + aqi2 + ")");
-            MyProgressBar bar2 = (MyProgressBar) cv1.findViewById(R.id.prog_bar);
-            bar2.setProgress(aqi2);
-            cv1.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    gasSpecific(1, gasNames[1]);
-                    // TODO Auto-generated method stub
-                    //DO you work here
-                }
-            });
-
-            FrameLayout f3 = (FrameLayout) l.findViewById(R.id.cell2);
-            CardView cv2 = (CardView) f3.findViewById(R.id.cv);
-            cv2.setMaxCardElevation(8);
-            TextView gasName3 = (TextView) cv2.findViewById(R.id.gas_name);
-            gasName3.setText(gasNames[2]);
-            TextView gasAqi3 = (TextView) cv2.findViewById(R.id.gas_aqi);
-            int aqi3 = aqiValues[2];
-            gasAqi3.setText("(" + aqi3 + ")");
-            MyProgressBar bar3 = (MyProgressBar) cv2.findViewById(R.id.prog_bar);
-            bar3.setProgress(aqi3);
-            cv2.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    gasSpecific(2, gasNames[2]);
-                    // TODO Auto-generated method stub
-                    //DO you work here
-                }
-            });
-
-            FrameLayout f4 = (FrameLayout) l.findViewById(R.id.cell3);
-            CardView cv3 = (CardView) f4.findViewById(R.id.cv);
-            cv3.setMaxCardElevation(8);
-            TextView gasName4 = (TextView) cv3.findViewById(R.id.gas_name);
-            gasName4.setText(gasNames[3]);
-            TextView gasAqi4 = (TextView) cv3.findViewById(R.id.gas_aqi);
-            int aqi4 = aqiValues[3];
-            gasAqi4.setText("(" + aqi4 + ")");
-            MyProgressBar bar4 = (MyProgressBar) cv3.findViewById(R.id.prog_bar);
-            bar4.setProgress(aqi4);
-            cv3.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    gasSpecific(3, gasNames[3]);
-                    // TODO Auto-generated method stub
-                    //DO you work here
-                }
-            });
-
-            FrameLayout f5 = (FrameLayout) l.findViewById(R.id.cell4);
-            CardView cv4 = (CardView) f5.findViewById(R.id.cv);
-            cv4.setMaxCardElevation(8);
-            TextView gasName5 = (TextView) cv4.findViewById(R.id.gas_name);
-            gasName5.setText(gasNames[4]);
-            TextView gasAqi5 = (TextView) cv4.findViewById(R.id.gas_aqi);
-            int aqi5 = aqiValues[4];
-            gasAqi5.setText("(" + aqi5 + ")");
-            MyProgressBar bar5 = (MyProgressBar) cv4.findViewById(R.id.prog_bar);
-            bar5.setProgress(aqi5);
-            cv4.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    gasSpecific(4, gasNames[4]);
-                    // TODO Auto-generated method stub
-                    //DO you work here
-                }
-            });
         }
         else{
             l.findViewById(R.id.noDataAvailable).setVisibility(View.VISIBLE);
@@ -168,6 +72,159 @@ public class DetailsFragment extends Fragment {
         intent.putExtra("Tile_Index", tileIndex);
         intent.putExtra("Gas_Name", gasName);
         startActivity(intent);
+    }
+
+
+    private void NewHandleFrameLayouts(final String[] gasNames ,final int[] aqiValues,View l)
+    {
+
+        int frameLayouts[] ={-1 ,R.id.mostProminent,R.id.cell1 ,R.id.cell2 ,R.id.cell3 ,R.id.cell4 };
+        int cardViews =R.id.cv;
+
+
+        for (int i = 1 ; i <= 5 ; i++)
+        {
+
+            final int index = i-1;
+
+
+            FrameLayout frameLayout = (FrameLayout)l.findViewById( frameLayouts[i] );
+            CardView cardView = (CardView) frameLayout.findViewById( cardViews );
+            cardView.setMaxCardElevation(8);
+            TextView gasName = (TextView) cardView.findViewById(R.id.gas_name);
+            gasName.setText(gasNames[ index ]);
+            TextView gasAqi = (TextView) cardView.findViewById(R.id.gas_aqi);
+            int aqi = aqiValues[ index ];
+            gasAqi.setText("(" + aqi + ")");
+            MyProgressBar progressBar = (MyProgressBar) cardView.findViewById(R.id.prog_bar);
+            progressBar.setProgress(aqi);
+
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    gasSpecific( index , gasNames[index]);
+
+                }
+            });
+
+
+        }
+
+
+    }
+
+
+
+    //Unused
+    private void handleFrameLayouts(final String[] gasNames ,final int[] aqiValues,View l)
+    {
+
+
+        FrameLayout f1 = (FrameLayout) l.findViewById(R.id.mostProminent);
+        CardView main = (CardView) f1.findViewById(R.id.cv);
+        main.setMaxCardElevation(8);
+        TextView gasName = (TextView) main.findViewById(R.id.gas_name);
+        gasName.setText(gasNames[0]);
+        TextView gasAqi = (TextView) main.findViewById(R.id.gas_aqi);
+
+        int aqi = aqiValues[0];
+        gasAqi.setText("(" + aqi + ")");
+        MyProgressBar mainBar = (MyProgressBar) main.findViewById(R.id.prog_bar);
+        mainBar.setProgress(aqi);
+        main.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                gasSpecific(0, gasNames[0]);
+                // TODO Auto-generated method stub
+                //DO you work here
+            }
+        });
+
+
+        FrameLayout f2 = (FrameLayout) l.findViewById(R.id.cell1);
+        CardView cv1 = (CardView) f2.findViewById(R.id.cv);
+        cv1.setMaxCardElevation(8);
+        TextView gasName2 = (TextView) cv1.findViewById(R.id.gas_name);
+        gasName2.setText(gasNames[1]);
+        TextView gasAqi2 = (TextView) cv1.findViewById(R.id.gas_aqi);
+        int aqi2 = aqiValues[1];
+        gasAqi2.setText("(" + aqi2 + ")");
+        MyProgressBar bar2 = (MyProgressBar) cv1.findViewById(R.id.prog_bar);
+        bar2.setProgress(aqi2);
+        cv1.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                gasSpecific(1, gasNames[1]);
+                // TODO Auto-generated method stub
+                //DO you work here
+            }
+        });
+
+        FrameLayout f3 = (FrameLayout) l.findViewById(R.id.cell2);
+        CardView cv2 = (CardView) f3.findViewById(R.id.cv);
+        cv2.setMaxCardElevation(8);
+        TextView gasName3 = (TextView) cv2.findViewById(R.id.gas_name);
+        gasName3.setText(gasNames[2]);
+        TextView gasAqi3 = (TextView) cv2.findViewById(R.id.gas_aqi);
+        int aqi3 = aqiValues[2];
+        gasAqi3.setText("(" + aqi3 + ")");
+        MyProgressBar bar3 = (MyProgressBar) cv2.findViewById(R.id.prog_bar);
+        bar3.setProgress(aqi3);
+        cv2.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                gasSpecific(2, gasNames[2]);
+                // TODO Auto-generated method stub
+                //DO you work here
+            }
+        });
+
+        FrameLayout f4 = (FrameLayout) l.findViewById(R.id.cell3);
+        CardView cv3 = (CardView) f4.findViewById(R.id.cv);
+        cv3.setMaxCardElevation(8);
+        TextView gasName4 = (TextView) cv3.findViewById(R.id.gas_name);
+        gasName4.setText(gasNames[3]);
+        TextView gasAqi4 = (TextView) cv3.findViewById(R.id.gas_aqi);
+        int aqi4 = aqiValues[3];
+        gasAqi4.setText("(" + aqi4 + ")");
+        MyProgressBar bar4 = (MyProgressBar) cv3.findViewById(R.id.prog_bar);
+        bar4.setProgress(aqi4);
+        cv3.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                gasSpecific(3, gasNames[3]);
+                // TODO Auto-generated method stub
+                //DO you work here
+            }
+        });
+
+        FrameLayout f5 = (FrameLayout) l.findViewById(R.id.cell4);
+        CardView cv4 = (CardView) f5.findViewById(R.id.cv);
+        cv4.setMaxCardElevation(8);
+        TextView gasName5 = (TextView) cv4.findViewById(R.id.gas_name);
+        gasName5.setText(gasNames[4]);
+        TextView gasAqi5 = (TextView) cv4.findViewById(R.id.gas_aqi);
+        int aqi5 = aqiValues[4];
+        gasAqi5.setText("(" + aqi5 + ")");
+        MyProgressBar bar5 = (MyProgressBar) cv4.findViewById(R.id.prog_bar);
+        bar5.setProgress(aqi5);
+        cv4.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                gasSpecific(4, gasNames[4]);
+                // TODO Auto-generated method stub
+                //DO you work here
+            }
+        });
+
+
+
     }
 
 }

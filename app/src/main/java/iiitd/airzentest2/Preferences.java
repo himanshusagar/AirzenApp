@@ -164,9 +164,9 @@ public class Preferences extends AppCompatActivity implements AdapterView.OnItem
         int len = current.size();
         int index = 0;
         TextView diseaseText = null;
-        String diseaseId;
+
         String ids[] = new String[48];
-        List<String> curr = new ArrayList<String>(current);
+        List<String> curr = new ArrayList<>(current);
         while(index < 10){
             ids[index] = "disease" + Integer.toString(index + 1);
             Log.d("IDno", ids[index]);
@@ -176,7 +176,7 @@ public class Preferences extends AppCompatActivity implements AdapterView.OnItem
             if(index < len) {
                 //LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) l.getLayoutParams();
                 diseaseText = (TextView) l.findViewById(R.id.diseases);
-                diseaseText.setText((String) curr.get(index));
+                diseaseText.setText( curr.get(index));
                 //params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
                 l.invalidate();
                 Button minus = (Button) l.findViewById(R.id.remove);

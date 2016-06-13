@@ -13,5 +13,6 @@
         <item android:title="About us"
             android:id="@+id/nav_item_about" />
     </group>
+    
 
 </menu>

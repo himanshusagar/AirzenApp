@@ -9,6 +9,8 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -46,7 +48,7 @@ public class DbSingleton {
     public static void init(Context context) {
         if (mInstance == null) {
             mInstance = new DbSingleton(context);
-            Log.d("database created", "xxxxxxxxxxxxxxxxx");
+            Log.d("db instance created", "xxxxxxxxxxxxxxxxx");
         }
         else{
             Log.d("Database Present","sasasasasasas");
@@ -81,6 +83,8 @@ public class DbSingleton {
             val.add(cur.getInt(cur.getColumnIndex(gas)));
             cur.moveToNext();
         }
+        cur.close();
+
         return val;
     }
     public ArrayList<Integer> getPastWeek(String gas){
@@ -96,6 +100,7 @@ public class DbSingleton {
             val.add(cur.getInt(cur.getColumnIndex(gas)));
             cur.moveToNext();
         }
+        cur.close();
         return val;
     }
     public ArrayList<Integer> getPastMonth(String gas){
@@ -111,6 +116,7 @@ public class DbSingleton {
             val.add(cur.getInt(cur.getColumnIndex(gas)));
             cur.moveToNext();
         }
+        cur.close();
         return val;
     }
     public ArrayList<Integer> getPastYear(String gas){
@@ -126,6 +132,7 @@ public class DbSingleton {
             val.add(cur.getInt(cur.getColumnIndex(gas)));
             cur.moveToNext();
         }
+        cur.close();
         return val;
     }
 
@@ -140,6 +147,7 @@ public class DbSingleton {
         cur.moveToFirst();
         if(!cur.isAfterLast())
             val = cur.getInt(cur.getColumnIndex(gas));
+        cur.close();
         return val;
     }
 
@@ -177,7 +185,9 @@ public class DbSingleton {
                     + " FROM "
                     + DbContract.DefectPreferences.TABLE_NAME,null);
             cur.moveToFirst();
-        }catch (NullPointerException e){
+        }
+        catch (NullPointerException e)
+        {
             return null;
         }
 
@@ -186,7 +196,7 @@ public class DbSingleton {
             current.add(String.valueOf(cur.getString(cur.getColumnIndex(DbContract.DefectPreferences.DEFECT))));
             cur.moveToNext();
         }
-
+        cur.close();
         return current;
     }
 
@@ -223,7 +233,7 @@ public class DbSingleton {
         }
 
         Map<String, Integer> sortedMap = sortByComparator(gasData);
-
+        cur.close();
         return sortedMap;
     }
 
@@ -245,8 +255,10 @@ public class DbSingleton {
             Map<String, Integer> cleanMap = clean(gasData);
             Map<String, Integer> sortedMap = sortByComparator(cleanMap);
 
+            cur.close();
             return sortedMap;
         }
+        cur.close();
         return null;
     }
 
@@ -619,5 +631,48 @@ public class DbSingleton {
             //Log.d("ContentValues", String.valueOf(gasData.get("aqi")[i]));
             mDb.insert(DbContract.PastYear.TABLE_NAME,null,values);
         }
+    }
+
+
+    public void updateTimeStamp()
+    {
+        getWritableDatabase();
+        mDb.delete(DbContract.TimeStamp.TABLE_NAME,null,null);
+
+        ContentValues values=new ContentValues();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        String currentDateandTime = sdf.format(new Date());
+
+        values.put(DbContract.TimeStamp.timeStamp ,currentDateandTime.toString() );
+        mDb.insert(DbContract.TimeStamp.TABLE_NAME, null , values);
+
+
+    }
+
+    public String getTimeStamp()
+    {
+        getWritableDatabase();
+
+        Cursor row = mDb.rawQuery(" SELECT * From " + DbContract.TimeStamp.TABLE_NAME + " ;",null);
+        row.moveToFirst();
+
+        String dateTime = "f";
+        dateTime = row.getString(row.getColumnIndex(DbContract.TimeStamp.timeStamp));
+
+        String sol[] = dateTime.split("_");
+        String date = sol[0];
+        String time = sol[1];
+        date = date.substring(0,4) + "/" + date.substring(4,6) + "/" + date.substring(6,8);
+        time = time.substring(0,2) + ":" + time.substring(2,4) + ":" + time.substring(4,6);
+
+
+        dateTime = "Last Updated : " + date + " " + time;
+        Log.d("TimeS" , dateTime);
+
+
+
+        row.close();
+
+        return dateTime;
     }
 }

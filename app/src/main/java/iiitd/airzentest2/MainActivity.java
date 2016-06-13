@@ -38,12 +38,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity
 {
-    public static final String IP_ADDR = "http://192.168.55.220:8081/";
-    public static final String SERVER_URL = "http://192.168.55.220:8081/api/app";
+    public static final String IP_ADDR = "http://192.168.43.89:8081/";
+    public static final String SERVER_URL = IP_ADDR +"api/app";
     DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
+    public static Context mContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setLogo(R.drawable.logo);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+
 
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -76,6 +79,18 @@ public class MainActivity extends AppCompatActivity
         current = db.getDefects();
 
         SharedPreferences rPrefs = this.getSharedPreferences("registration", Context.MODE_PRIVATE);
+
+
+/*
+        SharedPreferences timeSettings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext() );
+        SharedPreferences.Editor editor = timeSettings.edit();
+        editor.putString("timeStamp","1/1/2016");
+
+        editor.commit();
+        */
+
+
+        mContext = getApplicationContext();
         Log.d("-defects-", String.valueOf(current));
 
         if(!rPrefs.getBoolean("status",false)){
@@ -83,13 +98,15 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this,"Please register to a device.",Toast.LENGTH_LONG).show();
         }
 
+
+
         //Unused
        /* String reader = SendJson.makeQuery(prefs.getInt("age", 1989), current, "A123");
         if(reader != null) {
             getJson(reader);
         }
         */
-        //handleDatabase();
+        //handleDatabase(); // in Splash Screen Class
 
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -97,6 +114,8 @@ public class MainActivity extends AppCompatActivity
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
         mFragmentTransaction.replace(R.id.containerView,new TabFragment()).commit();
+
+
 
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -279,11 +298,15 @@ public class MainActivity extends AppCompatActivity
             public void onResponse(Call<ServerObject> call, Response<ServerObject> response)
             {
                 ServerObject answer = response.body();
-
+                Log.d("TimeS"," Got Response");
                 //serverObject = answer;
                 Log.d("YO" , " ");
-                answer.toString();
+                //answer.toString();
+
+
+
                 DataParser.initialiseTables(answer);
+
 
 
             }

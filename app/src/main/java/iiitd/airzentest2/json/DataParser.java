@@ -36,6 +36,8 @@ public class DataParser
     public static void initialiseTables(ServerObject serverObject)
     {
 
+
+
         DbSingleton db=DbSingleton.getInstance();
 
         db.generate24HourTable(serverObject);
@@ -43,5 +45,6 @@ public class DataParser
         db.generateMonthTable(serverObject);
         db.generateYearTable(serverObject);
         db.generateAQITable(serverObject);
+        db.updateTimeStamp();
     }
 }

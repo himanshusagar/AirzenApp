@@ -18,6 +18,7 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
 
         MainActivity.handleDatabase();
+
         new Handler().postDelayed(new Runnable() {
 
             /*

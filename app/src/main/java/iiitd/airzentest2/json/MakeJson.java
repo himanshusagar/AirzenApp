@@ -11,7 +11,9 @@ import java.util.Set;
 /**
  * Created by Abhishek on 14-12-2015.
  */
-public class MakeJson {
+public class MakeJson
+{
+    //Unused
     public static JSONObject wrapPreferences(int yearOfBirth, Set defects, String deviceID){
         JSONObject data = new JSONObject();
         String defectsArray = "";

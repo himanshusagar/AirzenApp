@@ -11,6 +11,13 @@ public class ServerObject
 
     private String[] inferences;
 
+    private String timeStamp;
+
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
+
     public ServerObject(GasSpecific[] gasSpecific, String[] inferences)
     {
         this.gasSpecific = gasSpecific;
