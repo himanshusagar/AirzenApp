@@ -1,7 +1,6 @@
 package iiitd.airzentest2.fragment;
 
 import android.content.Intent;
-import android.database.SQLException;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -41,7 +40,7 @@ public class HomeFragment extends Fragment {
         LinearLayout l = (LinearLayout) inflater.inflate(R.layout.fragment_home, container, false);
 
         final int mainaqi = db.getAqi("aqi");
-
+        Log.d("Crash" , Integer.toString(mainaqi));
 
 
 
@@ -81,6 +80,7 @@ public class HomeFragment extends Fragment {
         {
             l.findViewById(R.id.mainDataContainer).setVisibility(View.GONE);
             l.findViewById(R.id.noDataAvailable).setVisibility(View.VISIBLE);
+
         }
         else
         {
@@ -128,28 +128,27 @@ public class HomeFragment extends Fragment {
                 }
             });
             refreshWebView(mainaqi);
+            TextView timeStamp = (TextView)l.findViewById(R.id.textViewTimpStamp);
+            Log.d("TimeS","Gonna Query");
+
+            try {
+                timeStamp.setText(
+
+                        db.getTimeStamp()
+                );
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+
+                timeStamp.setText(String.valueOf("Not Available"));
+            }
         }
 
 
-        TextView timeStamp = (TextView)l.findViewById(R.id.textViewTimpStamp);
-        Log.d("TimeS","Gonna Query");
 
-        try {
-            timeStamp.setText(
 
-                    db.getTimeStamp()
-            );
-            return l;
-        }
-        catch(SQLException e)
-        {
-            e.printStackTrace();
-
-            timeStamp.setText(String.valueOf("ni milla"));
-            return l;
-        }
-
-        //return l;
+        return l;
     }
 
 

@@ -145,9 +145,11 @@ public class DbSingleton {
                 + DbContract.Aqi.TABLE_NAME, null);
 
         cur.moveToFirst();
+
         if(!cur.isAfterLast())
             val = cur.getInt(cur.getColumnIndex(gas));
         cur.close();
+
         return val;
     }
 
