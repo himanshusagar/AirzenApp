@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
-import iiitd.airzentest2.MainActivity;
 import iiitd.airzentest2.R;
 
 public class SplashScreen extends AppCompatActivity {
@@ -17,7 +16,7 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        MainActivity.handleDatabase();
+//        MainActivity.handleDatabase();
 
         new Handler().postDelayed(new Runnable() {
 
@@ -30,7 +29,7 @@ public class SplashScreen extends AppCompatActivity {
             public void run() {
                 // This method will be executed once the timer is over
                 // Start your app main activity
-                Intent i = new Intent(SplashScreen.this, MainActivity.class);
+                Intent i = new Intent(SplashScreen.this, SignInActivity.class);
                 startActivity(i);
 
                 // close this activity

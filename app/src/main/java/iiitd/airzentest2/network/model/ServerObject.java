@@ -9,13 +9,26 @@ public class ServerObject
 {
     private GasSpecific[] gasSpecific;
 
+    private String token;
+    private String emailId;
     private String[] inferences;
 
-    private String timeStamp;
-
-    public String getTimeStamp() {
-        return timeStamp;
+    public String getToken() {
+        return token;
     }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getEmailId() {
+        return emailId;
+    }
+
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
+    }
+
 
 
     public ServerObject(GasSpecific[] gasSpecific, String[] inferences)

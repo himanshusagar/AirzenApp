@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="iiitd.airzentest2">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+
+
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -10,8 +15,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name">
-        </activity>
+            android:label="@string/app_name" />
         <activity
             android:name=".HealthRisks"
             android:label="@string/title_activity_health_risks"
@@ -49,17 +53,24 @@
             android:name=".network.CheckNetwork"
             android:label="@string/title_activity_check_network"
             android:theme="@style/AppTheme" />
-
         <activity android:name=".ui.SplashScreen">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
+
+        <activity
+            android:name=".ui.SignInActivity"
+            android:exported="true"
+            android:label="@string/title_activity_sign_in"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".ui.AirzenLogin"
+            android:exported="true"
+            />
+
+
     </application>
 
 </manifest>

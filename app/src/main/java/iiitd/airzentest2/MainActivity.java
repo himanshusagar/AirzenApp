@@ -30,6 +30,7 @@ import iiitd.airzentest2.fragment.TabFragment;
 import iiitd.airzentest2.json.DataParser;
 import iiitd.airzentest2.network.api.ServerApi;
 import iiitd.airzentest2.network.model.ServerObject;
+import iiitd.airzentest2.ui.AirzenLogin;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,16 +39,29 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity
 {
-    public static final String IP_ADDR = "http://192.168.43.89:8081/";
+    public static final String IP_ADDR = "http://192.168.55.220:8080/";
     public static final String SERVER_URL = IP_ADDR +"api/app";
+    public static final String SERVER_REGISTER = IP_ADDR + "api/app/register";
+    public static final String SHARED_PREFS_TOKEN_KEY = "iiitd.airzentest2.token";
+    public static final String SHARED_PREFS_isREGISTERED_KEY = "iiitd.airzentest2.isRegistered";
+    public static final String SHARED_PREFS_EMAILID = "iiitd.airzentest2.emailId";
+
+    public static final String PREFERENCES_FILE = "iiitd.airzentest2.PrefsFile";
+
+
+    //public static final String DUMMY_EMAIL = "gmail@gmail.com";
+
+    private static final String TAG = "AirzenLogin";
+
     DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
-    public static Context mContext;
+    static Context mContext;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -78,7 +92,14 @@ public class MainActivity extends AppCompatActivity
         Set<String> current = new HashSet<String>();
         current = db.getDefects();
 
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(MainActivity.PREFERENCES_FILE , Context.MODE_PRIVATE);
+
         SharedPreferences rPrefs = this.getSharedPreferences("registration", Context.MODE_PRIVATE);
+        Log.d("-defects-", String.valueOf(current));
+        if(!rPrefs.getBoolean("status",false)){
+            //Log.d("Status-", String.valueOf(rPrefs.getBoolean("status",false)));
+            Toast.makeText(this,"Please register to a device.",Toast.LENGTH_LONG).show();
+        }
 
 
 /*
@@ -91,14 +112,11 @@ public class MainActivity extends AppCompatActivity
 
 
         mContext = getApplicationContext();
-        Log.d("-defects-", String.valueOf(current));
 
-        if(!rPrefs.getBoolean("status",false)){
-            //Log.d("Status-", String.valueOf(rPrefs.getBoolean("status",false)));
-            Toast.makeText(this,"Please register to a device.",Toast.LENGTH_LONG).show();
-        }
+        String Token = sharedPreferences.getString(MainActivity.SHARED_PREFS_TOKEN_KEY , "");
 
 
+        Log.d(AirzenLogin.TAG , Token);
 
         //Unused
        /* String reader = SendJson.makeQuery(prefs.getInt("age", 1989), current, "A123");
@@ -106,7 +124,7 @@ public class MainActivity extends AppCompatActivity
             getJson(reader);
         }
         */
-        //handleDatabase(); // in Splash Screen Class
+        handleDatabase(); // NOT in Splash Screen Class
 
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -283,14 +301,19 @@ public class MainActivity extends AppCompatActivity
 
         ServerApi serverService = restAdapter.create(ServerApi.class);
 
+
         iiitd.airzentest2.network.model.GasSpecific[] array = {new iiitd.airzentest2.network.model.GasSpecific()};
         String[] array2 = {"My Inferences"};
 
 
 
-        ServerObject bodyObject = new ServerObject(array
-                ,  array2);
+        ServerObject bodyObject = new ServerObject(array,  array2);
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(MainActivity.PREFERENCES_FILE , Context.MODE_PRIVATE);
+        String Token = sharedPreferences.getString(MainActivity.SHARED_PREFS_TOKEN_KEY , "");
+        String emailId = sharedPreferences.getString(MainActivity.SHARED_PREFS_EMAILID , "");
 
+        bodyObject.setToken(Token);
+        bodyObject.setEmailId(emailId);
 
         Call<ServerObject> call = serverService.loadObject(bodyObject);
         call.enqueue(new Callback<ServerObject>() {
@@ -298,15 +321,20 @@ public class MainActivity extends AppCompatActivity
             public void onResponse(Call<ServerObject> call, Response<ServerObject> response)
             {
                 ServerObject answer = response.body();
-                Log.d("TimeS"," Got Response");
+                Log.d(TAG," Got Response");
                 //serverObject = answer;
-                Log.d("YO" , " ");
+                Log.d(TAG , " ");
                 //answer.toString();
 
 
+                if(answer!=null)
+                    DataParser.initialiseTables(answer);
+                else
+                {
+                    Log.d(TAG , "Answer Null: "  + (answer==null));
 
-                DataParser.initialiseTables(answer);
 
+                }
 
 
             }
@@ -314,7 +342,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onFailure(Call<ServerObject> call, Throwable t)
             {
-                Log.d("Fail",call.toString());
+                Log.d(TAG,call.toString());
                 //serverObject = null;
             }
         });
