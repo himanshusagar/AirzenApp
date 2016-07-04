@@ -3,7 +3,7 @@
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_grey_700"
+    android:background="@color/iron"
     android:orientation="vertical"
     android:weightSum="4"
     tools:context=".ui.SignInActivity">
@@ -29,9 +29,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="@string/title_text"
+            android:text="Airzen-Google Sigin"
             android:gravity="center"
-            android:textColor="@android:color/white"
+            android:textColor="@color/oil"
             android:textSize="36sp" />
 
         <TextView
@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/signed_out"
-            android:textColor="@android:color/white"
+            android:textColor="@color/oil"
             android:textSize="14sp" />
 
         <TextView
@@ -61,7 +61,7 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/blue_grey_900">
+        android:background="@color/iron">
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_button"
