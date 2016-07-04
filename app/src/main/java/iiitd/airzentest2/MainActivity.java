@@ -31,6 +31,7 @@ import iiitd.airzentest2.json.DataParser;
 import iiitd.airzentest2.network.api.ServerApi;
 import iiitd.airzentest2.network.model.ServerObject;
 import iiitd.airzentest2.ui.AirzenLogin;
+import iiitd.airzentest2.ui.SignInActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -137,25 +138,37 @@ public class MainActivity extends AppCompatActivity
 
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem)
-            {
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
                 mDrawerLayout.closeDrawers();
-
 
 
                 if (menuItem.getItemId() == R.id.nav_item_home) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.containerView,new TabFragment()).commit();
+                    fragmentTransaction.replace(R.id.containerView, new TabFragment()).commit();
 
                 }
 
                 if (menuItem.getItemId() == R.id.nav_item_profile) {
                     FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-                    xfragmentTransaction.replace(R.id.containerView,new ProfileFragment()).commit();
+                    xfragmentTransaction.replace(R.id.containerView, new ProfileFragment()).commit();
                 }
 
                 if (menuItem.getItemId() == R.id.nav_item_Preferences) {
-                    Intent intent = new Intent(getApplicationContext(),Preferences.class);
+                    Intent intent = new Intent(getApplicationContext(), Preferences.class);
+                    startActivity(intent);
+                }
+
+
+
+                if (menuItem.getItemId() == R.id.nav_item_action_logout)
+                {
+
+                Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+
+                intent.putExtra(SignInActivity.EXTRA_LOGOUT_STATUS, true);
+
+                Log.d(TAG, "Inside Menu");
+
                     startActivity(intent);
                 }
 
@@ -261,9 +274,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu);
+
         return true;
     }
 
@@ -272,14 +288,8 @@ public class MainActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     //Unused
@@ -355,6 +365,10 @@ public class MainActivity extends AppCompatActivity
 
 
 
+
     }
+
+
+
 
 }

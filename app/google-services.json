@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "127284250546",
+    "project_id": "airpure-c8fc"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:127284250546:android:d75f1048df1ca5c5",
+        "android_client_info": {
+          "package_name": "iiitd.airzentest2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "127284250546-u31rqavsb8v6c3fmlfj3kfo28eof7gfh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "iiitd.airzentest2",
+            "certificate_hash": "EC9ADDBB17881B4929EFB0FB65A15E7CDA3C3EE6"
+          }
+        },
+        {
+          "client_id": "127284250546-grh4dvhf6m8f94hoic7ps15li82a54al.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkwX2u7f2PwHoaJJFAwR20ugziAmFiHas"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

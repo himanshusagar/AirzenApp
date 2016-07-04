@@ -12,6 +12,10 @@
     <group android:id="@+id/group_settings_id">
         <item android:title="About us"
             android:id="@+id/nav_item_about" />
+
+        <item android:id="@+id/nav_item_action_logout" android:title="Logout"
+            />
+
     </group>
     
 
