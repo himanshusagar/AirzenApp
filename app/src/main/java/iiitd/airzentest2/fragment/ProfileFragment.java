@@ -1,5 +1,6 @@
 package iiitd.airzentest2.fragment;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import iiitd.airzentest2.MainActivity;
 import iiitd.airzentest2.R;
 import iiitd.airzentest2.json.SendJson;
 
@@ -34,33 +36,47 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         LinearLayout l = (LinearLayout)inflater.inflate(R.layout.fragment_profile, container, false);
 
-        SharedPreferences prefs = getContext().getSharedPreferences("registration", 0);
+        SharedPreferences sharedPreferences = getActivity().getApplicationContext().getSharedPreferences(MainActivity.PREFERENCES_FILE , Context.MODE_PRIVATE);
+
         TextView currentDevice = (TextView)l.findViewById(R.id.currentDevice);
 
-        currentDevice.setText("Current Device - " + prefs.getString("currentDevice", "Not registered to any device."));
+        if(sharedPreferences.getBoolean(MainActivity.SHARED_PREFS_isREGISTERED_KEY , false))
+        {
 
+            currentDevice.setText("Current Device - "  + sharedPreferences.getString(MainActivity.SHARED_PREFS_DEVICEID , "NULL") );
+
+        }
+        else
+        {
+            currentDevice.setText( "Not registered to any device.") ;
+        }
         Button button = (Button)l.findViewById(R.id.button);
         button.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (checkInputs() == true) {
-                            try {
-                                if (isValidUser()) {
-                                    Toast.makeText(getContext(), "Registered successfully.", Toast.LENGTH_SHORT).show();
-                                    updateCurrentDevice();
+                            if (checkInputs() == true) {
+                                try {
+                                    if (isValidUser()) {
+                                        Toast.makeText(getContext(), "Registered successfully.", Toast.LENGTH_SHORT).show();
+                                        updateCurrentDevice();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
                             }
                         }
                     }
-                }
-        );
+                });
+
+
+
         return l;
     }
 

@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity
     public static final String SHARED_PREFS_TOKEN_KEY = "iiitd.airzentest2.token";
     public static final String SHARED_PREFS_isREGISTERED_KEY = "iiitd.airzentest2.isRegistered";
     public static final String SHARED_PREFS_EMAILID = "iiitd.airzentest2.emailId";
+    public static final String SHARED_PREFS_DEVICEID = "iiitd.airzentest2.deviceId";
 
     public static final String PREFERENCES_FILE = "iiitd.airzentest2.PrefsFile";
 
@@ -95,9 +96,12 @@ public class MainActivity extends AppCompatActivity
 
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(MainActivity.PREFERENCES_FILE , Context.MODE_PRIVATE);
 
-        SharedPreferences rPrefs = this.getSharedPreferences("registration", Context.MODE_PRIVATE);
+
+
         Log.d("-defects-", String.valueOf(current));
-        if(!rPrefs.getBoolean("status",false)){
+
+        if(!sharedPreferences.getBoolean(MainActivity.SHARED_PREFS_isREGISTERED_KEY,false))
+        {
             //Log.d("Status-", String.valueOf(rPrefs.getBoolean("status",false)));
             Toast.makeText(this,"Please register to a device.",Toast.LENGTH_LONG).show();
         }
@@ -358,16 +362,16 @@ public class MainActivity extends AppCompatActivity
         });
 
 
+    }
 
 
-
-
-
-
+    @Override
+    public void onBackPressed()
+    {
+        this.finishAffinity();
 
 
     }
-
 
 
 

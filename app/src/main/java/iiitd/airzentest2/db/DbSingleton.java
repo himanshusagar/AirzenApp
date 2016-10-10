@@ -34,6 +34,8 @@ public class DbSingleton {
     private static DbHelper mDbHelper;
     private SQLiteDatabase mDb;
 
+
+
     private DbSingleton(Context context){
         mContext = context;
         mDbHelper = new DbHelper(mContext);
@@ -274,9 +276,16 @@ public class DbSingleton {
         return cleanMap;
     }
 
-    private int[] jsonToIntArray(JSONArray jsonArray) throws JSONException {
-        int[] arr = new int[jsonArray.length()];
-        for (int i = 0; i < jsonArray.length(); i++) {
+    private int[] jsonToIntArray(JSONArray jsonArray) throws JSONException
+    {
+
+        int l = 0;
+        if(jsonArray!=null)
+            l = jsonArray.length();
+
+        int[] arr = new int[l];
+
+        for (int i = 0; i < l; i++) {
             arr[i]=jsonArray.getInt(i);
         }
         return arr;
@@ -294,7 +303,14 @@ public class DbSingleton {
         getWritableDatabase();
         Map<String,Integer> gasData = new HashMap<>();
         int currentAqi;
-        int gasSpecSize = sO.getGasSpecific().length;
+
+        int gasSpecSize = 0;
+        if(sO.getGasSpecific()!=null)
+            gasSpecSize = sO.getGasSpecific().length;
+
+
+
+
         for (int i = 0 ; i < gasSpecSize ; i++)
         {
             currentAqi = sO.getGasSpecific()[i].getAqi();
@@ -317,6 +333,23 @@ public class DbSingleton {
 
     }
 
+    int gasesLen(JSONArray gases)
+    {
+        if(gases!=null)
+            return gases.length();
+        else
+            return 0;
+    }
+
+    int arrayLen(int[] arr)
+    {
+        if(arr!=null)
+            return arr.length;
+        else
+            return 0;
+    }
+
+
     //UNused
     public void createAQITable(JSONArray gases) throws JSONException {
         Log.d("Gas Specific aqi(aaa)", "Abhishek");
@@ -325,7 +358,10 @@ public class DbSingleton {
         int currentAqi;
         Log.d("Gas Specific aqi(aaa)", String.valueOf(gases));
 
-        for (int i=0;i<gases.length();i++){
+        int len = gasesLen(gases);
+
+        for (int i=0;i < len;i++)
+    {
             currentAqi = gases.getJSONObject(i).getInt("aqi");
             gasData.put(gases.getJSONObject(i).getString("gasType"), currentAqi);
             Log.d("Gas Specific aqi(aaa)", String.valueOf(currentAqi));
@@ -397,7 +433,10 @@ public class DbSingleton {
         }
         mDb.delete(DbContract.Past24Hours.TABLE_NAME,null,null);
 
-        for (int i = 0; i < pastDay.length; i++) {
+        int len = arrayLen(pastDay);
+
+
+        for (int i = 0; i < len ; i++) {
             ContentValues values=new ContentValues();
             values.put(DbContract.Past24Hours.HOUR_NUMBER,i);
             //values.put("aqi",gasData.get("aqi")[i]);
@@ -419,7 +458,10 @@ public class DbSingleton {
         Log.d("Gas Specific aqi-24", String.valueOf(gases));
         HashMap<String,int[]> gasData = new HashMap<>();
         int[] pastDay = null;
-        for (int i=0;i<gases.length();i++){
+
+        int len = gasesLen(gases);
+
+        for (int i=0;i< len;i++){
             pastDay = jsonToIntArray(gases.getJSONObject(i).getJSONArray("pastDay"));
             gasData.put(gases.getJSONObject(i).getString("gasType"), pastDay);
             //Log.d("Gas Specific aqi------", gases.getJSONObject(i).getString("aqi"));
@@ -427,7 +469,9 @@ public class DbSingleton {
 
         mDb.delete(DbContract.Past24Hours.TABLE_NAME,null,null);
 
-        for (int i = 0; i < pastDay.length; i++) {
+        int len2 = arrayLen(pastDay);
+
+        for (int i = 0; i < len2 ; i++) {
             ContentValues values=new ContentValues();
             values.put(DbContract.Past24Hours.HOUR_NUMBER,i);
             //values.put("aqi",gasData.get("aqi")[i]);
@@ -463,7 +507,10 @@ public class DbSingleton {
 
         mDb.delete(DbContract.PastWeek.TABLE_NAME,null,null);
 
-        for (int i = 0; i < pastWeek.length; i++) {
+        int len2 = arrayLen(pastWeek);
+
+
+        for (int i = 0; i < len2 ; i++) {
             ContentValues values=new ContentValues();
             values.put(DbContract.PastWeek.DAY_NUMBER,i);
             //values.put("aqi",gasData.get("aqi")[i]);
@@ -483,7 +530,11 @@ public class DbSingleton {
         Log.d("Gas Specific aqi-week", String.valueOf(gases));
         HashMap<String,int[]> gasData = new HashMap<>();
         int[] pastWeek = null;
-        for (int i=0;i<gases.length();i++){
+
+        int len = gasesLen(gases);
+
+
+        for (int i=0;i<len ;i++){
             pastWeek = jsonToIntArray(gases.getJSONObject(i).getJSONArray("pastWeek"));
             gasData.put(gases.getJSONObject(i).getString("gasType"), pastWeek);
             Log.d("Gas Specific aqi-week", gases.getJSONObject(i).getString("aqi"));
@@ -491,7 +542,10 @@ public class DbSingleton {
 
         mDb.delete(DbContract.PastWeek.TABLE_NAME,null,null);
 
-        for (int i = 0; i < pastWeek.length; i++) {
+        int len2 = arrayLen(pastWeek);
+
+
+        for (int i = 0; i < len2 ; i++) {
             ContentValues values=new ContentValues();
             values.put(DbContract.PastWeek.DAY_NUMBER,i);
             //values.put("aqi",gasData.get("aqi")[i]);
@@ -526,7 +580,11 @@ public class DbSingleton {
 
         mDb.delete(DbContract.PastMonth.TABLE_NAME,null,null);
 
-        for (int i = 0; i < pastMonth.length; i++) {
+        int len2 = arrayLen(pastMonth);
+
+
+        for (int i = 0; i < len2 ; i++) {
+
             ContentValues values=new ContentValues();
             values.put(DbContract.PastMonth.DAY_NUMBER,i);
             //values.put("aqi",gasData.get("aqi")[i]);
@@ -548,7 +606,10 @@ public class DbSingleton {
         Log.d("aqi-week-month", "month\n"+String.valueOf(gases));
         HashMap<String,int[]> gasData = new HashMap<>();
         int[] pastMonth = null;
-        for (int i=0;i<gases.length();i++){
+
+        int len = gasesLen(gases);
+
+        for (int i=0;i< len ;i++){
             pastMonth = jsonToIntArray(gases.getJSONObject(i).getJSONArray("pastMonth"));
             gasData.put(gases.getJSONObject(i).getString("gasType"), pastMonth);
             //Log.d("Gas Specific aqi",gases.getJSONObject(i).getString("aqi"));
@@ -556,7 +617,11 @@ public class DbSingleton {
 
         mDb.delete(DbContract.PastMonth.TABLE_NAME,null,null);
 
-        for (int i = 0; i < pastMonth.length; i++) {
+
+        int len2 = arrayLen(pastMonth);
+
+
+        for (int i = 0; i < len2 ; i++) {
             ContentValues values=new ContentValues();
             values.put(DbContract.PastMonth.DAY_NUMBER,i);
             //values.put("aqi",gasData.get("aqi")[i]);
@@ -592,7 +657,11 @@ public class DbSingleton {
 
         mDb.delete(DbContract.PastYear.TABLE_NAME,null,null);
 
-        for (int i = 0; i < pastyear.length; i++) {
+        int len2 = arrayLen(pastyear);
+
+
+        for (int i = 0; i < len2 ; i++) {
+
             ContentValues values=new ContentValues();
             values.put(DbContract.PastYear.MONTH_NUMBER,i);
             //values.put("aqi",gasData.get("aqi")[i]);
@@ -613,7 +682,10 @@ public class DbSingleton {
         Log.d("aqi-Year", "Year - "+String.valueOf(gases));
         HashMap<String,int[]> gasData = new HashMap<>();
         int[] pastyear = null;
-        for (int i=0;i<gases.length();i++){
+
+        int len = gasesLen(gases);
+
+        for (int i=0;i< len ;i++){
             pastyear = jsonToIntArray(gases.getJSONObject(i).getJSONArray("pastYear"));
             gasData.put(gases.getJSONObject(i).getString("gasType"), pastyear);
             Log.d("Gas Specific aqi-year", gases.getJSONObject(i).getString("aqi"));
@@ -621,8 +693,12 @@ public class DbSingleton {
 
         mDb.delete(DbContract.PastYear.TABLE_NAME,null,null);
 
-        for (int i = 0; i < pastyear.length; i++) {
-            ContentValues values=new ContentValues();
+        int len2 = arrayLen(pastyear);
+
+
+        for (int i = 0; i < len2 ; i++) {
+
+             ContentValues values=new ContentValues();
             values.put(DbContract.PastYear.MONTH_NUMBER,i);
             //values.put("aqi",gasData.get("aqi")[i]);
             values.put(DbContract.PastYear.NITROGEN_DIOXIDE,gasData.get("nitrogenDioxide")[i]);

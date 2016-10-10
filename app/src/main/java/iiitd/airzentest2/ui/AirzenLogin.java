@@ -119,7 +119,7 @@ public class AirzenLogin extends AppCompatActivity
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        String deviceId = _deviceIdText.getText().toString();
+        final String deviceId = _deviceIdText.getText().toString();
         String passKey = _passwordText.getText().toString();
 
         // TODO: Implement your own authentication logic here.
@@ -139,7 +139,7 @@ public class AirzenLogin extends AppCompatActivity
 
         //userEmail = MainActivity.DUMMY_EMAIL;
 
-        RegisterObject bodyObject = new RegisterObject(deviceId ,passKey ,userEmail);
+        final RegisterObject bodyObject = new RegisterObject(deviceId ,passKey ,userEmail);
 
         Log.d(TAG , bodyObject.getPassKey());
 
@@ -148,36 +148,37 @@ public class AirzenLogin extends AppCompatActivity
 
         call.enqueue(new Callback<RegisterObject>() {
             @Override
-            public void onResponse(Call<RegisterObject> call, Response<RegisterObject> response)
-            {
+            public void onResponse(Call<RegisterObject> call, Response<RegisterObject> response) {
 
                 progressDialog.dismiss();
 
                 RegisterObject answer = response.body();
-                Log.d(TAG," Got Response + Reg");
+                Log.d(TAG, " Got Response + Reg");
                 //serverObject = answer;
                 //answer.toString();
 
-                if(answer.isPairFound())
-                {
 
-                    SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(MainActivity.PREFERENCES_FILE , Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor =sharedPreferences.edit();
+                if (answer.isPairFound()) {
 
-                    editor.putString(MainActivity.SHARED_PREFS_TOKEN_KEY,answer.getToken());
-                    editor.putBoolean(MainActivity.SHARED_PREFS_isREGISTERED_KEY,true);
-                    editor.putString(MainActivity.SHARED_PREFS_EMAILID,userEmail);
+                    SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(MainActivity.PREFERENCES_FILE, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
 
+                    editor.putString(MainActivity.SHARED_PREFS_TOKEN_KEY, answer.getToken());
+                    editor.putBoolean(MainActivity.SHARED_PREFS_isREGISTERED_KEY, true);
+                    editor.putString(MainActivity.SHARED_PREFS_EMAILID, userEmail);
+                    editor.putString(MainActivity.SHARED_PREFS_DEVICEID , deviceId);
+                    Log.d(TAG , "dalo" + deviceId + userEmail);
                     editor.apply();
 
                     startMainActivityIntent();
 
                     onLoginSuccess();
 
-                }
-                else
+                } else
+                {
+                    Log.d(TAG , "pair nF");
                     onLoginFailed();
-
+            }
 
             }
 
